@@ -1,0 +1,16 @@
+[
+  {
+    "isFree": false,
+    "key": "setting",
+    "performance": 0,
+    "distance": 100,
+    "reviewed": false,
+    "sound": true,
+    "recoveryTime": 60,
+    "recoveryDistance": true,
+    "isNearestDisplay": true,
+    "sortKind": 0,
+    "sortType": true,
+    "debug": true
+  }
+]
