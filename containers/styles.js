@@ -213,7 +213,7 @@ export const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: CL_BORDER,
     borderBottomWidth: 0.25,
-    alignItems: 'left',
+    alignItems: 'flex-start',
   },
   icon: {
     backgroundColor: CL_LIST_BG,

@@ -1,4 +1,5 @@
-import { Notifications, Permissions } from 'expo';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions'
 import { Platform, PermissionsAndroid, Alert, Linking } from 'react-native';
 import { _handleNotification } from './location';
 import { isCheckDayWeek, isCheckTime } from './position';
@@ -88,20 +89,18 @@ export async function initNotification() {
           );
           finalStatus = status;
           if (finalStatus !== 'granted') {
-            if (finalStatus !== 'granted') {
-              await Alert.alert(
-                I18n.t('setting'),
-                I18n.t('alermNotificationError'),
-                [
-                  {
-                    text: I18n.t('goSet'),
-                    onPress: async () => {
-                      Linking.openURL(SETTING_APP_URL);
-                    },
-                  },
-                ]
-              );
-            }
+            // await Alert.alert(
+            //   I18n.t('setting'),
+            //   I18n.t('alermNotificationError'),
+            //   [
+            //     {
+            //       text: I18n.t('goSet'),
+            //       onPress: async () => {
+            //         Linking.openURL(SETTING_APP_URL);
+            //       },
+            //     },
+            //   ]
+            // );
           }
         },
       },
@@ -177,7 +176,7 @@ export const getDistanceMeter = (coords1, coords2) => {
     6371 *
     Math.acos(
       Math.cos(lat1) * Math.cos(lat2) * Math.cos(lng2 - lng1) +
-        Math.sin(lat1) * Math.sin(lat2)
+      Math.sin(lat1) * Math.sin(lat2)
     );
   return distance;
 };

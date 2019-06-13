@@ -1,10 +1,8 @@
 import {
-  Location,
-  TaskManager,
   Speech,
-  Permissions,
-  Notifications,
 } from 'expo';
+import * as Location from 'expo-location'
+import * as TaskManager from 'expo-task-manager'
 import {
   mergeStorageDataOwnInfo,
   getStorageDataOwnInfo,
@@ -22,6 +20,7 @@ import I18n from '../i18n/index';
 let isChecking = false;
 let alermList = null;
 const LOCATION_TASK_NAME = 'background-location-task';
+const GEO_TASK_NAME = 'background-geo-task';
 
 export async function _handleNotification(notification) {
   console.log(notification);
@@ -166,15 +165,6 @@ export async function startLocation(ownInfo, alermList) {
       console.log('change');
     }
     beforeSetting = nextSetting;
-    // await TaskManager.unregisterAllTasksAsync();
-    // await Notifications.presentLocalNotificationAsync({
-    //   title: I18n.t('appTitle'),
-    //   body: 'alermItem.alermMessage',
-    //   sound: true,
-    //   data: {
-    //     message: 'alermItem.alermMessage',
-    //   },
-    // });
     Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: accuracy,
       distanceInterval: distanceInterval,
@@ -204,43 +194,11 @@ TaskManager.defineTask(
     }
   }
 );
-// // タスク定義
-// TaskManager.defineTask(
-//   GEOFENCING_ON_ENTER,
-//   ({ data: { eventType, region }, error }) => {
-//     console.log(error);
-//     if (error) {
-//       console.error(error.message);
-//       return;
-//     }
-//     // ジオフェンス内に入ったイベントであれば、プッシュ通知を表示
-//     if (eventType === Location.GeofencingEventType.Enter) {
-//       const PATTERN = [1000, 2000, 3000];
-//       Vibration.vibrate(PATTERN);
-//       Notifications.presentLocalNotificationAsync({
-//         title: 'test geofence notification',
-//         body: 'geofence notification',
-//         data: {
-//           message: 'geofence notification message',
-//         },
-//       });
-//     } else {
-//       const PATTERN = [1000];
-//       Vibration.vibrate(PATTERN);
-//       Notifications.presentLocalNotificationAsync({
-//         title: 'test geofence notification2',
-//         body: 'geofence notification2',
-//         data: {
-//           message: 'geofence notification message2',
-//         },
-//       });
-//     }
-//   }
-// );
-TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+
+TaskManager.defineTask(GEO_TASK_NAME, ({ data, error }) => {
   const PATTERN = [1000];
   Vibration.vibrate(PATTERN);
-  console.log('LOCATION_TASK_NAME');
+  console.log('GEO_TASK_NAME');
   if (error) {
     // Error occurred - check `error.message` for more details.
     return;
@@ -252,8 +210,8 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
 });
 // ボタンが押されたときにジオフェンスを設定する
 export async function startGeofencing(position) {
-  console.log('startGeofencing');
-  Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+  console.log('startGeofencing'); GEO_TASK_NAME
+  Location.startLocationUpdatesAsync(GEO_TASK_NAME, {
     accuracy: Location.Accuracy.Balanced,
   });
 }
