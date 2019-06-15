@@ -5,7 +5,7 @@
     "slug": "snack-BJoj3e5R6",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/snack-icon.png",
@@ -21,16 +21,28 @@
         "xml"
       ]
     },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "yuki-kuwahara",
+            "project": "norisugokuwa",
+            "authToken": "9ac14d5b955f41bc93a568b069781af87a545232955945e58d13e8d994467a10"
+          }
+        }
+      ]
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "jp.kuwatan.norisugoKuwa",
       "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。",
         "UIBackgroundModes": [
           "location",
           "fetch"
-        ],
-        "NSLocationWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。"
+        ]
       }
     }
   }

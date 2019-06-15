@@ -10,7 +10,7 @@ import {
 import { ButtonGroup } from 'react-native-elements';
 import { styles, CHECK_SIZE } from '../containers/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { connect } from 'react-redux';
 import { setAlermItem } from '../actions/actions';
@@ -252,7 +252,8 @@ export class EditRegist extends React.Component {
             }}>
             {this.state.markers.map(marker => (
               <MapView.Marker
-                key={marker.key}
+                key={marker.toString()}
+                value={marker}
                 coordinate={marker.latlng}
                 title={marker.title}
                 description={marker.description}
@@ -263,7 +264,7 @@ export class EditRegist extends React.Component {
                 latitude: this.state.markers[0].latlng.latitude,
                 longitude: this.state.markers[0].latlng.longitude,
               }}
-              radius={this.state.alermDistance}
+              radius={Number(this.state.alermDistance)}
               strokeWidth={1}
               strokeColor="darkviolet"
               fillColor={'rgba(148,0,211,0.1)'}

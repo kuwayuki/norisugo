@@ -11,6 +11,6 @@
     "isNearestDisplay": true,
     "sortKind": 0,
     "sortType": true,
-    "debug": true
+    "debug": false
   }
 ]

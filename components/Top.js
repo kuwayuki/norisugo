@@ -161,7 +161,7 @@ export class Top extends Component {
   }
 
   async getAsyncPosition() {
-    this.setState({ isFetching: true }, async function() {
+    this.setState({ isFetching: true }, async function () {
       // let ownInfo = await json.getStorageDataOwnInfo();
       // if (ownInfo.coords != undefined) {
       //   await this.props.setOwnInfoCoords(ownInfo.coords);
@@ -219,9 +219,9 @@ export class Top extends Component {
 
     if (
       coords.latitude.toFixed(POINT_NUM) ==
-        nearRestCoords.latitude.toFixed(POINT_NUM) &&
+      nearRestCoords.latitude.toFixed(POINT_NUM) &&
       coords.longitude.toFixed(POINT_NUM) ==
-        nearRestCoords.longitude.toFixed(POINT_NUM)
+      nearRestCoords.longitude.toFixed(POINT_NUM)
     ) {
       return true;
     }
@@ -286,23 +286,7 @@ export class Top extends Component {
       });
     };
 
-    const nearestStationPart = (nearestStation, index) => {
-      if (nearestStation == null || nearestStation[index] == null) {
-        return;
-      }
-      const station = nearestStation[index];
-      return (
-        <View style={styles.nearRestInfo}>
-          <Text style={styles.nearRestName} numberOfLines={1}>
-            {station != null ? station.name : ''}
-          </Text>
-          <Text style={styles.nearRestDistance} numberOfLines={1}>
-            {station != null ? station.distanceM : ''}
-          </Text>
-        </View>
-      );
-    };
-    const nearestStation = nearestStation => {
+    const nearestStation = () => {
       return (
         <View style={styles.nearRest}>
           <Text

@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  AdMobBanner,
   AdMobInterstitial,
   PublisherBanner,
   StoreReview,
   Linking,
 } from 'expo';
+import { AdMobBanner } from 'expo-ads-admob'
 import { Alert } from 'react-native';
 import I18n from '../i18n/index';
 import * as json from './jsonFile';
