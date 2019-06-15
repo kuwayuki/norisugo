@@ -19,10 +19,10 @@ import {
   startLocation,
   clearBefore,
   startGeofencing,
+  getCurrentPosition,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
 import { admobBanner } from '../containers/googleAdmob';
-import { getCurrentPosition } from '../containers/position';
 import {
   setOwnInfo,
   setOwnInfoCoords,
@@ -162,14 +162,7 @@ export class Top extends Component {
 
   async getAsyncPosition() {
     this.setState({ isFetching: true }, async function () {
-      // let ownInfo = await json.getStorageDataOwnInfo();
-      // if (ownInfo.coords != undefined) {
-      //   await this.props.setOwnInfoCoords(ownInfo.coords);
-      // } else {
-      //   const position = await getCurrentPosition(TIMER);
-      //   await this.props.setOwnInfoCoords(position.coords);
-      // }
-      const position = await getCurrentPosition(TIMER);
+      const position = await getCurrentPosition();
       this.props.setOwnInfoCoords(position.coords);
 
       this.handleGetLatAndLng();

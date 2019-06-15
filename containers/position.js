@@ -4,14 +4,6 @@ import { Notifications } from 'expo';
 import I18n from '../i18n/index';
 
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
-export async function getCurrentPosition(timeoutMillis = 10000) {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject, {
-      timeout: timeoutMillis,
-    });
-  });
-}
-
 // 地点までの距離が、通知距離内かのチェック
 export const isInside = (distance, alermDistance) => {
   if (distance < alermDistance) {

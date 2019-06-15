@@ -50,7 +50,11 @@ export class EditRegist extends React.Component {
     listIndex = getListIndex(props);
     let alermItem = props.alermList[listIndex];
     let selectIndex = getSelectedDistanceIndex(alermItem.alermDistance);
+    let region = alermItem.coords;
+    region.latitudeDelta = 0.00003 * alermItem.alermDistance;
+    region.longitudeDelta = 0.00003 * alermItem.alermDistance;
     this.state = {
+      region,
       isSelectedDistance: selectIndex != 9,
       selectedDistanceIndex: selectIndex,
       title: alermItem.title,
@@ -82,14 +86,6 @@ export class EditRegist extends React.Component {
         },
       ],
     };
-  }
-
-  componentWillMount() {
-    let alermItem = this.props.alermList[listIndex];
-    let region = alermItem.coords;
-    region.latitudeDelta = 0.00003 * alermItem.alermDistance;
-    region.longitudeDelta = 0.00003 * alermItem.alermDistance;
-    this.setState({ region });
   }
 
   async componentDidMount() {
@@ -297,21 +293,21 @@ export class EditRegist extends React.Component {
               />
             </View>
           ) : (
-            <View style={styles.rowTextSetting}>
-              <TextInput
-                style={styles.textNum}
-                keyboardType={'number-pad'}
-                onChangeText={alermDistance => {
-                  let region = this.state.region;
-                  region.latitudeDelta = 0.00003 * alermDistance;
-                  region.longitudeDelta = 0.00003 * alermDistance;
-                  this.setState({ alermDistance, region });
-                }}
-                value={this.state.alermDistance}
-              />
-              <Text>{I18n.t('meter')}</Text>
-            </View>
-          )}
+              <View style={styles.rowTextSetting}>
+                <TextInput
+                  style={styles.textNum}
+                  keyboardType={'number-pad'}
+                  onChangeText={alermDistance => {
+                    let region = this.state.region;
+                    region.latitudeDelta = 0.00003 * alermDistance;
+                    region.longitudeDelta = 0.00003 * alermDistance;
+                    this.setState({ alermDistance, region });
+                  }}
+                  value={this.state.alermDistance}
+                />
+                <Text>{I18n.t('meter')}</Text>
+              </View>
+            )}
           <Text style={styles.sectionHeader}>{I18n.t('editAlermWeekDay')}</Text>
           <View style={styles.rowTextSetting}>
             <Text style={styles.text}>{I18n.t('editChoiceWeekDay')}</Text>

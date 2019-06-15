@@ -18,17 +18,19 @@ import { addAlermItem } from '../actions/actions';
 import { styles, ICON_SIZE } from '../containers/styles';
 import { admobBanner } from '../containers/googleAdmob';
 import { newRegistHeader } from '../containers/header';
+import {
+  getCurrentPosition,
+} from '../containers/location';
 import I18n from '../i18n/index';
 
 const GEOCODE_ENDPOINT =
   'https://maps.googleapis.com/maps/api/place/nearbysearch/json';
 
-let timer = null;
-
 export class NewRegist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isMapRead: false,
       word: '',
       searchResult: '',
       isSearch: false,
@@ -44,11 +46,19 @@ export class NewRegist extends React.Component {
     };
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     let region = this.props.ownInfo.coords;
+    if (region == null || region.latitude == null || region.longitude == null) {
+      region = await getCurrentPosition();
+    }
     region.latitudeDelta = 0.05;
     region.longitudeDelta = 0.05;
-    this.setState({ region });
+    this.setState({ region })
+  }
+
+
+  componentDidMount() {
+    this.setState({ isMapRead: true })
   }
 
   initPlace() {
@@ -214,7 +224,7 @@ export class NewRegist extends React.Component {
             </ScrollView>
           </View>
         )}
-        <MapView
+        {this.state.isMapRead && <MapView
           provider={MapView.PROVIDER_GOOGLE}
           style={styles.container}
           onPoiClick={e => {
@@ -223,12 +233,14 @@ export class NewRegist extends React.Component {
           }}
           onRegionChangeComplete={region => this.setState({ region })}
           region={{
-            latitude: this.state.region.latitude,
-            longitude: this.state.region.longitude,
-            latitudeDelta: this.state.region.latitudeDelta,
-            longitudeDelta: this.state.region.longitudeDelta,
+            latitude: this.state.region.latitude.toFixed(4),
+            longitude: this.state.region.longitude.toFixed(4),
+            latitudeDelta: this.state.region.latitudeDelta.toFixed(4),
+            longitudeDelta: this.state.region.longitudeDelta.toFixed(4),
           }}>
-          {this.state.markers.map(marker => (
+          {this.state.markers != null && this.state.markers.map(marker => (
+            marker.latlng != null &&
+            marker.latlng.latitude != null &&
             <MapView.Marker
               key={marker.toString()}
               value={marker}
@@ -237,7 +249,7 @@ export class NewRegist extends React.Component {
               description={marker.description}
             />
           ))}
-        </MapView>
+        </MapView>}
         {this.props.ownInfo.isFree && admobBanner()}
       </View>
     );

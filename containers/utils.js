@@ -82,7 +82,8 @@ export async function initNotification() {
     // 通知許可を促す
     await Alert.alert(I18n.t('setting'), I18n.t('alermNotification'), [
       {
-        text: I18n.t('allowNotification'),
+        text: 'OK',
+        // text: I18n.t('allowNotification'),
         onPress: async () => {
           const { status } = await Permissions.askAsync(
             Permissions.NOTIFICATIONS
