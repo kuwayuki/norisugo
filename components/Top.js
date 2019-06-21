@@ -39,7 +39,7 @@ import I18n from '../i18n/index';
 let before = null;
 let nearest = true; // TODO:
 const ICON_SIZE = 20;
-const TIMER = 1000;
+const TIMER = 10000;
 const NEAREST_DIS = 100000;
 const POINT_NUM = 2;
 // const POINT_NUM = 3;

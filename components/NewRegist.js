@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import MapView from 'react-native-maps'
+import { MapView } from 'expo';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { addAlermItem } from '../actions/actions';
@@ -53,12 +53,7 @@ export class NewRegist extends React.Component {
     }
     region.latitudeDelta = 0.05;
     region.longitudeDelta = 0.05;
-    this.setState({ region })
-  }
-
-
-  componentDidMount() {
-    this.setState({ isMapRead: true })
+    this.setState({ region, isMapRead: true })
   }
 
   initPlace() {
@@ -233,10 +228,10 @@ export class NewRegist extends React.Component {
           }}
           onRegionChangeComplete={region => this.setState({ region })}
           region={{
-            latitude: this.state.region.latitude.toFixed(4),
-            longitude: this.state.region.longitude.toFixed(4),
-            latitudeDelta: this.state.region.latitudeDelta.toFixed(4),
-            longitudeDelta: this.state.region.longitudeDelta.toFixed(4),
+            latitude: this.state.region.latitude,
+            longitude: this.state.region.longitude,
+            latitudeDelta: this.state.region.latitudeDelta,
+            longitudeDelta: this.state.region.longitudeDelta,
           }}>
           {this.state.markers != null && this.state.markers.map(marker => (
             marker.latlng != null &&

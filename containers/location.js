@@ -36,6 +36,11 @@ export async function _handleNotification(notification) {
   }
 }
 
+export async function getCurrentPosition() {
+  let position = await Location.getCurrentPositionAsync({});
+  return position;
+}
+
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (error) {
     console.log(error);
@@ -168,7 +173,6 @@ export async function startLocation(ownInfo, alermList) {
     Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: accuracy,
       distanceInterval: distanceInterval,
-      showsBackgroundLocationIndicator: true,
     });
   }
 }

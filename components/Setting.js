@@ -11,7 +11,7 @@ import { Button, ButtonGroup } from 'react-native-elements';
 import AppLink from 'react-native-app-link';
 import * as json from '../containers/jsonFile';
 import { styles } from '../containers/styles';
-import { getCurrentPosition } from '../containers/position';
+import { getCurrentPosition } from '../containers/location';
 import { settingHeader } from '../containers/header';
 import { admobInterstitial } from '../containers/googleAdmob';
 import { APP_STORE_ID, PLAY_STORE_ID } from '../constants/constants';
@@ -69,7 +69,7 @@ export class Setting extends React.Component {
         text: 'OK',
         onPress: async () => {
           this.props.clearStore();
-          const position = await getCurrentPosition(5000);
+          const position = await getCurrentPosition();
           this.props.setOwnInfoCoords(position.coords);
           Alert.alert(I18n.t('initialize'), I18n.t('initializeOK'), [
             {

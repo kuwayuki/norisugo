@@ -5,7 +5,7 @@
     "slug": "snack-BJoj3e5R6",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.4",
+    "version": "1.0.9",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/snack-icon.png",
@@ -36,6 +36,9 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "jp.kuwatan.norisugoKuwa",
+      "config": {
+        "googleMapsApiKey": "AIzaSyAC6V5J-1VTfpx7tweX9VUHUSqtSx4jOcg"
+      },
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。",
         "NSLocationAlwaysAndWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。",

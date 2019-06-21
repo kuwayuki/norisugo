@@ -53,7 +53,7 @@ export const storeReview = props => {
         text: 'OK',
         onPress: async () => {
           await StoreReview.requestReview();
-          await storeDetailReview();
+          // await storeDetailReview();
           props.setOwnInfoReviewed(true);
           await json.mergeStorageDataOwnInfo({ reviewed: true });
         },
