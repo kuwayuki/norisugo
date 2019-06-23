@@ -103,7 +103,7 @@ async function newMarkerClick(state, props) {
     isLimitTimeZone: false,
     timeZoneStart: '12:00',
     timeZoneEnd: '12:00',
-    isLimitWeekDay: false,
+    isLimitWeekDay: true,
     isMonday: true,
     isTuesday: true,
     isWednesday: true,

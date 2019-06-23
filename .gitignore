@@ -2,3 +2,6 @@
 package-lock.json
 .expo
 *.textile
+*.txt
+.expo-shared
+*.code-workspace
