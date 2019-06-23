@@ -20,7 +20,7 @@ import {
   getCurrentPosition,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
-import { admobBanner } from '../containers/googleAdmob';
+import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
 import {
   setOwnInfo,
   setOwnInfoCoords,
@@ -183,6 +183,10 @@ export class Top extends Component {
     if (this.timer == null) {
       // 初回情報取得
       await this.getAsyncPosition();
+      if (this.props.ownInfo.isFree) {
+        // 2個以上の場合は必ず広告を表示
+        admobInterstitialInit();
+      }
 
       this.timer = setInterval(async () => {
         await this.getAsyncPosition();

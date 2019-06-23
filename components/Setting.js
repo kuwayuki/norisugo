@@ -44,7 +44,8 @@ export class Setting extends React.Component {
   }
 
   buyStore() {
-    AppLink.openInStore({ APP_STORE_ID, PLAY_STORE_ID })
+    let config = { appStoreId: APP_STORE_ID, appStoreLocale: I18n.t('locale'), playStoreId: PLAY_STORE_ID }
+    AppLink.openInStore(config)
       .then(() => {
         // do stuff
       })

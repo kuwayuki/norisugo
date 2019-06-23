@@ -1,11 +1,9 @@
 import React from 'react';
 import {
-  AdMobInterstitial,
-  PublisherBanner,
   StoreReview,
   Linking,
 } from 'expo';
-import { AdMobBanner } from 'expo-ads-admob'
+import { AdMobInterstitial, AdMobBanner, PublisherBanner } from 'expo-ads-admob'
 import { Alert } from 'react-native';
 import I18n from '../i18n/index';
 import * as json from './jsonFile';
@@ -21,12 +19,27 @@ export const admobBanner = () => {
   return <AdMobBanner bannerSize="smartBannerPortrait" adUnitID={BANNER} />;
 };
 
+export async function admobInterstitialInit() {
+  AdMobInterstitial.setAdUnitID(INTERSTITIAL);
+  AdMobInterstitial.requestAdAsync();
+}
+
+export async function admobInter() {
+  if (AdMobInterstitial.getIsReadyAsync()) {
+    await AdMobInterstitial.showAdAsync();
+  }
+}
+
 export async function admobInterstitial() {
   let randomNum = random();
   if (randomNum == 0) {
-    AdMobInterstitial.setAdUnitID(INTERSTITIAL);
-    await AdMobInterstitial.requestAdAsync();
-    await AdMobInterstitial.showAdAsync();
+    await admobInter;
+  }
+}
+
+export async function admobInterstitialNumCount(count, total) {
+  if (count == null || total == null || count >= total) {
+    await admobInter;
   }
 }
 

@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Button } from 'react-native-elements';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps'
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { addAlermItem } from '../actions/actions';

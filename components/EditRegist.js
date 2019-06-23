@@ -10,7 +10,7 @@ import {
 import { ButtonGroup } from 'react-native-elements';
 import { styles, CHECK_SIZE } from '../containers/styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MapView } from 'expo';
+import MapView from 'react-native-maps'
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { connect } from 'react-redux';
 import { setAlermItem } from '../actions/actions';

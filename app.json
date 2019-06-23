@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "スルーサイン",
+    "name": "スルーサイン FREE",
     "description": "No description",
-    "slug": "snack-BJoj3e5R6",
+    "slug": "snack-BJoj4e2R8",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.10.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/snack-icon.png",
@@ -23,7 +23,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "jp.kuwatan.norisugoKuwa",
+      "bundleIdentifier": "jp.kuwatan.norisugoFree",
       "config": {
         "googleMapsApiKey": "AIzaSyAC6V5J-1VTfpx7tweX9VUHUSqtSx4jOcg"
       },

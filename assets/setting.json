@@ -1,6 +1,6 @@
 [
   {
-    "isFree": false,
+    "isFree": true,
     "key": "setting",
     "performance": 0,
     "distance": 100,

@@ -9,7 +9,7 @@ import {
   getTimeFromDateTime,
   checkOSSetting,
 } from '../containers/utils';
-import { storeReview } from '../containers/googleAdmob';
+import { storeReview, admobInterstitialNumCount } from '../containers/googleAdmob';
 import { CL_HEADER, CL_ICON_HEADER, RIDE_ICON_HEADER } from './styles';
 import I18n from '../i18n/index';
 
@@ -60,6 +60,7 @@ export async function newRegistBtn(props) {
       ]);
     }
   } else {
+    await admobInterstitialNumCount(count, DEF.MAX_TRIAL);
     props.navigation.navigate('NewRegist');
   }
 }
