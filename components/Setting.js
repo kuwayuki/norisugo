@@ -191,25 +191,21 @@ export class Setting extends React.Component {
               </View>
             </View>
           )}
-          {nearest && (
-            <Text style={styles.sectionHeader}>
-              {I18n.t('isNearestDisplay')}
+          <Text style={styles.sectionHeader}>
+            {I18n.t('isNearestDisplay')}
+          </Text>
+          <View style={styles.rowTextSetting}>
+            <Text style={styles.text}>
+              {this.state.isNearestDisplay ? I18n.t('on') : I18n.t('off')}
             </Text>
-          )}
-          {nearest && (
-            <View style={styles.rowTextSetting}>
-              <Text style={styles.text}>
-                {this.state.isNearestDisplay ? I18n.t('on') : I18n.t('off')}
-              </Text>
-              <Switch
-                style={styles.setting}
-                onValueChange={isNearestDisplay =>
-                  this.setState({ isNearestDisplay })
-                }
-                value={this.state.isNearestDisplay}
-              />
-            </View>
-          )}
+            <Switch
+              style={styles.setting}
+              onValueChange={isNearestDisplay =>
+                this.setState({ isNearestDisplay })
+              }
+              value={this.state.isNearestDisplay}
+            />
+          </View>
           <Text style={styles.sectionHeader}>{I18n.t('recovery')}</Text>
           <Text style={styles.sectionHeader2}>{I18n.t('recoveryTime')}</Text>
           <View style={styles.rowTextSetting}>

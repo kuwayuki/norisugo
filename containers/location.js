@@ -26,8 +26,6 @@ export async function _handleNotification(notification) {
   console.log(notification);
   if (notification.origin === 'selected') {
     //バックグラウンドで通知
-    // Vibration.vibrate(1, true);
-    // Speech.speak(notification.data.message, { 'language ': 'ja' });
   } else if (notification.origin === 'received') {
     //フォアグラウンドで通知
     const PATTERN = [1000, 2000, 3000];

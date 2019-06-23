@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Notifications } from 'expo';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Swipeout from 'react-native-swipeout';
 import { connect } from 'react-redux';
@@ -18,7 +17,6 @@ import * as json from '../containers/jsonFile';
 import {
   startLocation,
   clearBefore,
-  startGeofencing,
   getCurrentPosition,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
@@ -37,7 +35,7 @@ import * as DEF from '../constants/constants';
 import I18n from '../i18n/index';
 
 let before = null;
-let nearest = true; // TODO:
+let nearest = true;
 const ICON_SIZE = 20;
 const TIMER = 10000;
 const NEAREST_DIS = 100000;

@@ -53,9 +53,19 @@ export const storeReview = props => {
         text: 'OK',
         onPress: async () => {
           await StoreReview.requestReview();
-          // await storeDetailReview();
           props.setOwnInfoReviewed(true);
           await json.mergeStorageDataOwnInfo({ reviewed: true });
+          Alert.alert(I18n.t('reviewTitle'), I18n.t('reviewDetailQuestion'), [
+            {
+              text: I18n.t('writeReview'),
+              onPress: async () => {
+                await storeDetailReview();
+              },
+            },
+            {
+              text: 'Cancel',
+            },
+          ]);
         },
       },
       {

@@ -4,7 +4,6 @@ import { Platform, PermissionsAndroid, Alert, Linking } from 'react-native';
 import { _handleNotification } from './location';
 import { isCheckDayWeek, isCheckTime } from './position';
 import { STATUS, SETTING_APP_URL } from '../constants/constants';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import I18n from '../i18n/index';
 import {
   CL_ABAILABLE,
@@ -89,20 +88,6 @@ export async function initNotification() {
             Permissions.NOTIFICATIONS
           );
           finalStatus = status;
-          if (finalStatus !== 'granted') {
-            // await Alert.alert(
-            //   I18n.t('setting'),
-            //   I18n.t('alermNotificationError'),
-            //   [
-            //     {
-            //       text: I18n.t('goSet'),
-            //       onPress: async () => {
-            //         Linking.openURL(SETTING_APP_URL);
-            //       },
-            //     },
-            //   ]
-            // );
-          }
         },
       },
     ]);

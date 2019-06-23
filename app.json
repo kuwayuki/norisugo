@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "norisugoKuwa",
+    "name": "ノリスゴ",
     "description": "No description",
     "slug": "snack-BJoj3e5R6",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.9",
+    "version": "1.10.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/snack-icon.png",

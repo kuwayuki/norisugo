@@ -109,7 +109,7 @@ export async function checkPosition(ownInfo, alermList) {
         // 時間チェック
         if (!isCheckTime(alermItem)) continue;
 
-        // 対象範囲なので通知を行う :TODO
+        // 対象範囲なので通知を行う
         await Notifications.presentLocalNotificationAsync({
           title: I18n.t('appTitle'),
           body: alermItem.alermMessage,
@@ -118,7 +118,6 @@ export async function checkPosition(ownInfo, alermList) {
             message: alermItem.alermMessage,
           },
         });
-        console.log('122');
         alermItem.isAlermed = true;
         alermItem.alermTime = new Date().getTime();
         addAsyncStorage(alermItem);
