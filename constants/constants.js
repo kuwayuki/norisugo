@@ -5,8 +5,8 @@ let unique = '_NAME';
 export const DISPLAY_HEADER_ICON = false;
 // export const SETTING_APP_URL = 'app-settings://notification/expo';// TODO:
 export const SETTING_APP_URL = 'app-settings:';// TODO:
-export const APP_STORE_ID = 'id1467611043';// TODO:
-export const PLAY_STORE_ID = 'id443904275';// TODO:
+export const APP_STORE_ID = '1467611043';// TODO:
+export const PLAY_STORE_ID = 'id1467611043';// TODO:
 
 export const ALERM_LIST = {
   ADD: 'ADD' + unique,

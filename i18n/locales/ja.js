@@ -1,6 +1,6 @@
 export default {
   locale: 'ja',
-  appTitle: 'ノリスゴ',
+  appTitle: 'スルーサイン',
   blank: '',
   setting: '設定',
   goSet: '設定する',
