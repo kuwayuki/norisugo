@@ -60,7 +60,9 @@ export async function newRegistBtn(props) {
       ]);
     }
   } else {
-    await admobInterstitialNumCount(count, DEF.MAX_TRIAL);
+    if (props.ownInfo.isFree) {
+      await admobInterstitialNumCount(count, DEF.MAX_TRIAL);
+    }
     props.navigation.navigate('NewRegist');
   }
 }
