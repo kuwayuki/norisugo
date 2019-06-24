@@ -20,7 +20,7 @@ import {
   getCurrentPosition,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
-import { admobBanner } from '../containers/googleAdmob';
+import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
 import {
   setOwnInfo,
   setOwnInfoCoords,
@@ -47,7 +47,7 @@ const statusicon = item => {
   let status = utils.getStatusIcon(item);
   switch (status) {
     case DEF.STATUS.AVAILABLE:
-      return <MaterialIcons name="volume-up" size={ICON_SIZE} color="lime" />;
+      return <MaterialIcons name="volume-up" size={ICON_SIZE} color="#12d3cf" />;
     case DEF.STATUS.DISABLE:
       return <MaterialIcons name="volume-off" size={ICON_SIZE} color="red" />;
     case DEF.STATUS.ALERMED:
@@ -183,6 +183,10 @@ export class Top extends Component {
     if (this.timer == null) {
       // 初回情報取得
       await this.getAsyncPosition();
+      if (this.props.ownInfo.isFree) {
+        // 2個以上の場合は必ず広告を表示
+        admobInterstitialInit();
+      }
 
       this.timer = setInterval(async () => {
         await this.getAsyncPosition();
@@ -281,7 +285,7 @@ export class Top extends Component {
       return (
         <View style={styles.nearRest}>
           <Text
-            style={[styles.nearRestTitle, { backgroundColor: 'darkgreen' }]}>
+            style={[styles.nearRestTitle, { backgroundColor: '#1A3B63' }]}>
             {I18n.t('nearest')}
           </Text>
           <FlatList

@@ -23,14 +23,15 @@ const LOCATION_TASK_NAME = 'background-location-task';
 const GEO_TASK_NAME = 'background-geo-task';
 
 export async function _handleNotification(notification) {
-  console.log(notification);
   if (notification.origin === 'selected') {
     //バックグラウンドで通知
   } else if (notification.origin === 'received') {
-    //フォアグラウンドで通知
-    const PATTERN = [1000, 2000, 3000];
-    Vibration.vibrate(PATTERN);
-    Alert.alert(I18n.t('blank'), notification.data.message);
+    if (isChecking) {
+      //フォアグラウンドで通知
+      const PATTERN = [1000, 2000, 3000];
+      Vibration.vibrate(PATTERN);
+      Alert.alert(I18n.t('blank'), notification.data.message);
+    }
   }
 }
 
@@ -44,6 +45,8 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     console.log(error);
     return;
   }
+  if (isChecking) return;
+  isChecking = true;
 
   if (data) {
     const { locations } = data;
@@ -54,6 +57,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     checkPosition(ownInfo, alermList);
     startLocation(ownInfo, alermList);
   }
+  isChecking = false;
 });
 
 async function getBestPerformance(ownCoords, alermList) {
