@@ -47,7 +47,7 @@ const statusicon = item => {
   let status = utils.getStatusIcon(item);
   switch (status) {
     case DEF.STATUS.AVAILABLE:
-      return <MaterialIcons name="volume-up" size={ICON_SIZE} color="lime" />;
+      return <MaterialIcons name="volume-up" size={ICON_SIZE} color="#12d3cf" />;
     case DEF.STATUS.DISABLE:
       return <MaterialIcons name="volume-off" size={ICON_SIZE} color="red" />;
     case DEF.STATUS.ALERMED:
@@ -285,7 +285,7 @@ export class Top extends Component {
       return (
         <View style={styles.nearRest}>
           <Text
-            style={[styles.nearRestTitle, { backgroundColor: 'darkgreen' }]}>
+            style={[styles.nearRestTitle, { backgroundColor: '#1A3B63' }]}>
             {I18n.t('nearest')}
           </Text>
           <FlatList

@@ -4,21 +4,21 @@ export const ICON_SIZE = 25;
 export const CHECK_SIZE = 30;
 
 // 背景色
-const CL_BG = 'aliceblue';
+const CL_BG = '#dbe2ef';
 // 最寄り背景色
-const CL_NEAR_BG = 'teal';
+const CL_NEAR_BG = '#3f72af';
 // リスト背景色
-const CL_LIST_BG = 'snow';
+const CL_LIST_BG = '#f9f7f7';
 // ヘッダー色
-export const CL_HEADER = 'royalblue';
+export const CL_HEADER = '#3f72af';
 // 項目ヘッダー色
-const CL_ITEM_HEADER = 'darkturquoise';
+const CL_ITEM_HEADER = '#59B7C9';
 // const CL_ITEM_HEADER = 'darkturquoise';
 // 項目サブヘッダー色
 const CL_ITEM_SUB_HEADER = 'darkgray';
 // const CL_ITEM_SUB_HEADER = 'yellowgreen';
 // 距離有効カラー
-export const CL_ABAILABLE = 'deepskyblue';
+export const CL_ABAILABLE = '#60D3D1';
 export const CL_DISABLE = 'lightslategray';
 export const CL_ALERMED = 'lightslategray';
 export const CL_OUT_WEEK_DAY = 'lightslategray';
@@ -27,13 +27,13 @@ export const CL_OUT_TIME = 'lightslategray';
 // 線色
 const CL_BORDER = 'gray';
 // 文字色
-const FONT_MOJI = 'white';
+const FONT_MOJI = '#f5f5f5';
 // 文字色(説明)
 const FONT_TEXT = '#202124';
 const FONT_DES = '#1a73e8';
 // 残り距離文字色
-const FONT_DISTANCE = 'white';
-export const CL_ICON_HEADER = 'white';
+const FONT_DISTANCE = '#f9f7f7';
+export const CL_ICON_HEADER = '#f9f7f7';
 export const RIDE_ICON_HEADER = 'gold';
 
 export const styles = StyleSheet.create({
@@ -69,10 +69,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   nearRestName: {
+    color: FONT_MOJI,
     paddingLeft: 10,
     fontSize: 15,
   },
   nearRestDistance: {
+    color: FONT_MOJI,
     paddingTop: 1,
     paddingLeft: 10,
     fontSize: 14,
