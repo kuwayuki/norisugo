@@ -11,6 +11,8 @@ import * as json from './jsonFile';
 export const BANNER = 'ca-app-pub-2103807205659646/2958032499';
 const INTERSTITIAL = 'ca-app-pub-2103807205659646/1954946162';
 const MAX_NUM = 5;
+const ADMOB_IN_DISABLE = true;// TODO:
+
 export const random = () => {
   return Math.floor(Math.random() * Math.floor(MAX_NUM));
 };
@@ -20,17 +22,20 @@ export const admobBanner = () => {
 };
 
 export async function admobInterstitialInit() {
+  if (ADMOB_IN_DISABLE) return;
   AdMobInterstitial.setAdUnitID(INTERSTITIAL);
   AdMobInterstitial.requestAdAsync();
 }
 
 export async function admobInter() {
+  if (ADMOB_IN_DISABLE) return;
   if (AdMobInterstitial.getIsReadyAsync()) {
     await AdMobInterstitial.showAdAsync();
   }
 }
 
 export async function admobInterstitial() {
+  if (ADMOB_IN_DISABLE) return;
   let randomNum = random();
   if (randomNum == 0) {
     await admobInter;
@@ -38,6 +43,7 @@ export async function admobInterstitial() {
 }
 
 export async function admobInterstitialNumCount(count, total) {
+  if (ADMOB_IN_DISABLE) return;
   if (count == null || total == null || count >= total) {
     await admobInter;
   }
