@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "スルーサイン FREE",
+    "name": "スルーサイン Lite",
     "description": "No description",
     "slug": "snack-BJoj4e2R8",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/snack-icon.png",
