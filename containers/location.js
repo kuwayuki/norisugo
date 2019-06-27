@@ -12,6 +12,8 @@ import {
   checkPosition,
   isCheckTime,
   isCheckDayWeek,
+  checkGeofenceInside,
+  checkGeofenceOutside,
 } from '../containers/position';
 import { Alert, Vibration } from 'react-native';
 import { getDistanceMeter } from './utils';
@@ -20,7 +22,6 @@ import I18n from '../i18n/index';
 let isChecking = false;
 let alermList = null;
 const LOCATION_TASK_NAME = 'background-location-task';
-const GEO_TASK_NAME = 'background-geo-task';
 
 export async function _handleNotification(notification) {
   if (notification.origin === 'selected') {
@@ -175,49 +176,99 @@ export async function startLocation(ownInfo, alermList) {
     Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
       accuracy: accuracy,
       distanceInterval: distanceInterval,
+      pausesUpdatesAutomatically: true
     });
   }
 }
 
-const GEOFENCING_ON_ENTER = 'geofencingOnEnter';
-TaskManager.defineTask(
-  GEOFENCING_ON_ENTER,
-  ({ data: { eventType, region }, error }) => {
-    if (error) {
-      console.log("You've entered:", region);
-      // check `error.message` for more details.
-      return;
-    }
-    console.log(eventType);
-    if (eventType === Location.GeofencingEventType.Enter) {
-      console.log("You've entered region:", region);
-      const PATTERN = [1000];
-      Vibration.vibrate(PATTERN);
-    } else if (eventType === Location.GeofencingEventType.Exit) {
-      console.log("You've left region:", region);
-      const PATTERN = [1000];
-      Vibration.vibrate(PATTERN);
-    }
-  }
-);
+const GEO_TASK_NAME = 'background-geo-task_';
+const No0 = 0;
+const No1 = 1;
+const No2 = 2;
+const No3 = 3;
+const No4 = 4;
+const No5 = 5;
+const No6 = 6;
+const No7 = 7;
+const No8 = 8;
+const No9 = 9;
+const No10 = 10;
+const MAX = No10;
+TaskManager.defineTask(GEO_TASK_NAME + No0, ({ data: { eventType, region }, error }) => {
+  taskManager(No0, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No1, ({ data: { eventType, region }, error }) => {
+  taskManager(No1, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No2, ({ data: { eventType, region }, error }) => {
+  taskManager(No2, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No3, ({ data: { eventType, region }, error }) => {
+  taskManager(No3, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No4, ({ data: { eventType, region }, error }) => {
+  taskManager(No4, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No5, ({ data: { eventType, region }, error }) => {
+  taskManager(No5, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No6, ({ data: { eventType, region }, error }) => {
+  taskManager(No6, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No7, ({ data: { eventType, region }, error }) => {
+  taskManager(No7, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No8, ({ data: { eventType, region }, error }) => {
+  taskManager(No8, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No9, ({ data: { eventType, region }, error }) => {
+  taskManager(No9, { data: { eventType, region }, error });
+});
+TaskManager.defineTask(GEO_TASK_NAME + No10, ({ data: { eventType, region }, error }) => {
+  taskManager(No10, { data: { eventType, region }, error });
+});
 
-TaskManager.defineTask(GEO_TASK_NAME, ({ data, error }) => {
-  const PATTERN = [1000];
-  Vibration.vibrate(PATTERN);
-  console.log('GEO_TASK_NAME');
+export async function taskManager(index, { data: { eventType, region }, error }) {
   if (error) {
-    // Error occurred - check `error.message` for more details.
+    console.error(error.message);
     return;
   }
-  if (data) {
-    const { locations } = data;
-    // do something with the locations captured in the background
+  // AsyncStorageより情報取得
+  alermList = await getAllStorageDataAlermList();
+  if (eventType === Location.GeofencingEventType.Enter) {
+    // 内に入ったら通知処理を行う
+    checkGeofenceInside(alermList[index]);
+  } else if (eventType === Location.GeofencingEventType.Exit) {
+    // 外に出たら通知を有効にする
+    let ownInfo = await getStorageDataOwnInfo();
+    checkGeofenceOutside(alermList[index], ownInfo);
   }
-});
-// ボタンが押されたときにジオフェンスを設定する
-export async function startGeofencing(position) {
-  console.log('startGeofencing'); GEO_TASK_NAME
-  Location.startLocationUpdatesAsync(GEO_TASK_NAME, {
-    accuracy: Location.Accuracy.Balanced,
-  });
+}
+
+// ジオフェンスMode
+export async function startGeofencing(alermList) {
+  stopAllGeofencing(alermList.length);
+  let index = 0;
+  for (let alermItem of alermList) {
+    Location.startGeofencingAsync(GEO_TASK_NAME + index, [{
+      latitude: alermItem.coords.latitude,
+      longitude: alermItem.coords.latitude,
+      radius: alermItem.alermDistance,
+      notifyOnEnter: true,
+      notifyOnExit: true,
+    }]);
+    index++;
+  }
+}
+
+// ジオフェンスMode
+export async function stopGeofencing(index) {
+  Location.stopGeofencingAsync(GEO_TASK_NAME + index);
+}
+
+// ジオフェンスMode
+export async function stopAllGeofencing(index) {
+  for (let i = index; i < MAX + 1; i++) {
+    Location.stopGeofencingAsync(GEO_TASK_NAME + i);
+  }
 }

@@ -18,6 +18,8 @@ import {
   startLocation,
   clearBefore,
   getCurrentPosition,
+  startGeofencing,
+  stopGeofencing,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
 import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
@@ -173,8 +175,6 @@ export class Top extends Component {
       // 設定済情報取得
       await json.getJsonData(this.props);
       await utils.initNotification();
-      // const position = await getCurrentPosition(TIMER);
-      // startGeofencing(position);
     } catch (e) {
       // alert(e.message);
     }
@@ -202,7 +202,8 @@ export class Top extends Component {
     if (before != this.props.alermList) {
       // 設定が変わったら再設定
       clearBefore();
-      startLocation(this.props.ownInfo, this.props.alermList);
+      startGeofencing(this.props.alermList);
+      // startLocation(this.props.ownInfo, this.props.alermList); TODO:
       before = this.props.alermList;
     }
   }
@@ -254,6 +255,7 @@ export class Top extends Component {
         backgroundColor: 'red',
         underlayColor: 'rgba(0,0,0,1)',
         onPress: () => {
+          stopGeofencing(index);  // TODO:
           this.props.deleteAlermItem(index);
           json.deleteAsyncStorage(index);
         },
