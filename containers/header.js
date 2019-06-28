@@ -100,7 +100,7 @@ async function newMarkerClick(state, props) {
     isAlermed: false,
     alermTime: null,
     alermMessage: I18n.t('alermPoint') + I18n.t('arrivedNear'),
-    alermDistance: 750,
+    alermDistance: 500,
     interval: 'auto',
     coords: { latitude: null, longitude: null },
     isLimitTimeZone: false,

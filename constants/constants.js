@@ -3,6 +3,7 @@ let unique = '_NAME';
 
 // export const DISPLAY_HEADER_ICON = true;
 export const DISPLAY_HEADER_ICON = false;
+export const GEOFENCE_ON = true;
 // export const SETTING_APP_URL = 'app-settings://notification/expo';// TODO:
 export const SETTING_APP_URL = 'app-settings:';// TODO:
 export const APP_STORE_ID = '1467611043';// TODO:

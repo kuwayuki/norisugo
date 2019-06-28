@@ -13,6 +13,11 @@
       "icon": "./assets/snack-icon.png",
       "hideExponentText": false
     },
+    "splash": {
+      "image": "./assets/loading-icon.png",
+      "backgroundColor": "#FFFFFF",
+      "resizeMode": "contain"
+    },
     "packagerOpts": {
       "assetExts": [
         "ttf",
