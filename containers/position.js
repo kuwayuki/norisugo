@@ -152,3 +152,41 @@ export async function checkPosition(ownInfo, alermList) {
   }
   return;
 }
+
+// Geofence:通知するかチェック
+export async function checkGeofenceInside(alermItem) {
+  // 有効の場合のみチェック
+  if (alermItem.isAvailable) {
+    // 未通知チェック
+    if (!alermItem.isAlermed) {
+      // 曜日チェック
+      if (!isCheckDayWeek(alermItem)) return;
+
+      // 時間チェック
+      if (!isCheckTime(alermItem)) return;
+
+      // 対象範囲なので通知を行う
+      await Notifications.presentLocalNotificationAsync({
+        title: I18n.t('appTitle'),
+        body: alermItem.alermMessage,
+        sound: true,
+        data: {
+          message: alermItem.alermMessage,
+        },
+      });
+      alermItem.isAlermed = true;
+      alermItem.alermTime = new Date().getTime();
+      addAsyncStorage(alermItem);
+    }
+  }
+  return;
+}
+
+// Geofence:通知オンにするかチェック
+export async function checkGeofenceOutside(alermItem, ownInfo) {
+  // 通知済みの場合だけはずす
+  if (alermItem.isAlermed) {
+    alermItem.isAlermed = false;
+    addAsyncStorage(alermItem);
+  }
+}

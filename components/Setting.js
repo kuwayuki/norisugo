@@ -14,7 +14,7 @@ import { styles } from '../containers/styles';
 import { getCurrentPosition } from '../containers/location';
 import { settingHeader } from '../containers/header';
 import { admobInterstitial } from '../containers/googleAdmob';
-import { APP_STORE_ID, PLAY_STORE_ID } from '../constants/constants';
+import { APP_STORE_ID, PLAY_STORE_ID, GEOFENCE_ON } from '../constants/constants';
 import I18n from '../i18n/index';
 
 let nearest = true; // TODO:
@@ -116,6 +116,50 @@ export class Setting extends React.Component {
     return text;
   };
   render() {
+    const recoveryRender = () => {
+      return (<View>
+        <Text style={styles.sectionHeader}>{I18n.t('recovery')}</Text>
+        <Text style={styles.sectionHeader2}>{I18n.t('recoveryTime')}</Text>
+        <View style={styles.rowTextSetting}>
+          <Text style={styles.text}>
+            {this.state.recoveryTime ? I18n.t('on') : I18n.t('off')}
+          </Text>
+          <Switch
+            style={styles.setting}
+            onValueChange={recoveryTime => this.setState({ recoveryTime })}
+            value={this.state.recoveryTime}
+          />
+        </View>
+        {this.state.recoveryTime && (
+          <View style={styles.rowTextSetting}>
+            <Text style={styles.textDes}>{I18n.t('recoveryTimeDes')}</Text>
+          </View>
+        )}
+        <Text style={styles.sectionHeader2}>
+          {I18n.t('recoveryDistance')}
+        </Text>
+        <View style={styles.rowTextSetting}>
+          <Text style={styles.text}>
+            {this.state.recoveryDistance ? I18n.t('on') : I18n.t('off')}
+          </Text>
+          <Switch
+            style={styles.setting}
+            onValueChange={recoveryDistance =>
+              this.setState({ recoveryDistance })
+            }
+            value={this.state.recoveryDistance}
+          />
+        </View>
+        {this.state.recoveryDistance && (
+          <View style={styles.rowTextSetting}>
+            <Text style={styles.textDes}>
+              {I18n.t('recoveryDistanceDes')}
+            </Text>
+          </View>
+        )}
+      </View>);
+    }
+
     return (
       <View style={styles.container}>
         {settingHeader(this.state, this.props)}
@@ -207,45 +251,7 @@ export class Setting extends React.Component {
               value={this.state.isNearestDisplay}
             />
           </View>
-          <Text style={styles.sectionHeader}>{I18n.t('recovery')}</Text>
-          <Text style={styles.sectionHeader2}>{I18n.t('recoveryTime')}</Text>
-          <View style={styles.rowTextSetting}>
-            <Text style={styles.text}>
-              {this.state.recoveryTime ? I18n.t('on') : I18n.t('off')}
-            </Text>
-            <Switch
-              style={styles.setting}
-              onValueChange={recoveryTime => this.setState({ recoveryTime })}
-              value={this.state.recoveryTime}
-            />
-          </View>
-          {this.state.recoveryTime && (
-            <View style={styles.rowTextSetting}>
-              <Text style={styles.textDes}>{I18n.t('recoveryTimeDes')}</Text>
-            </View>
-          )}
-          <Text style={styles.sectionHeader2}>
-            {I18n.t('recoveryDistance')}
-          </Text>
-          <View style={styles.rowTextSetting}>
-            <Text style={styles.text}>
-              {this.state.recoveryDistance ? I18n.t('on') : I18n.t('off')}
-            </Text>
-            <Switch
-              style={styles.setting}
-              onValueChange={recoveryDistance =>
-                this.setState({ recoveryDistance })
-              }
-              value={this.state.recoveryDistance}
-            />
-          </View>
-          {this.state.recoveryDistance && (
-            <View style={styles.rowTextSetting}>
-              <Text style={styles.textDes}>
-                {I18n.t('recoveryDistanceDes')}
-              </Text>
-            </View>
-          )}
+          {!GEOFENCE_ON && recoveryRender()}
           <Text style={styles.sectionHeader}>{I18n.t('other')}</Text>
           {this.state.isFree && (
             <View style={styles.rowTextSetting}>
