@@ -183,7 +183,7 @@ export async function checkGeofenceInside(alermItem) {
 }
 
 // Geofence:通知オンにするかチェック
-export async function checkGeofenceOutside(alermItem, ownInfo) {
+export async function checkGeofenceOutside(alermItem) {
   // 通知済みの場合だけはずす
   if (alermItem.isAlermed) {
     alermItem.isAlermed = false;
