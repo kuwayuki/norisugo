@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Switch, View, Alert, ScrollView } from 'react-native';
+import { Text, Switch, View, Alert, ScrollView, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import {
   setOwnInfo,
@@ -8,13 +8,14 @@ import {
   clearStore,
 } from '../actions/actions';
 import { Button, ButtonGroup } from 'react-native-elements';
+import { FontAwesome5 } from '@expo/vector-icons';
 import AppLink from 'react-native-app-link';
 import * as json from '../containers/jsonFile';
 import { styles } from '../containers/styles';
 import { getCurrentPosition } from '../containers/location';
 import { settingHeader } from '../containers/header';
 import { admobInterstitial } from '../containers/googleAdmob';
-import { APP_STORE_ID, PLAY_STORE_ID, GEOFENCE_ON } from '../constants/constants';
+import { APP_STORE_ID, PLAY_STORE_ID, GEOFENCE_ON, APP_URL, ICON_BTN_SIZE } from '../constants/constants';
 import I18n from '../i18n/index';
 
 let nearest = true; // TODO:
@@ -52,6 +53,25 @@ export class Setting extends React.Component {
       .catch(err => {
         // handle error
       });
+  }
+
+  shareApp(type) {
+    let baseUrl = "https://timeline.line.me/social-plugin/share?url=";
+    switch (type) {
+      case 0:
+        // Line
+        baseUrl = "https://timeline.line.me/social-plugin/share?url=";
+        break;
+      case 1:
+        // facebook
+        baseUrl = "http://www.facebook.com/sharer.php?u=";
+        break;
+      case 2:
+        // twitter
+        baseUrl = "http://twitter.com/share?url=";
+        break;
+    }
+    Linking.openURL(baseUrl + APP_URL);
   }
 
   SORT_KIND = [I18n.t('sortRegist'), I18n.t('sortDistance')];
@@ -263,6 +283,12 @@ export class Setting extends React.Component {
               />
             </View>
           )}
+          <View style={styles.rowTextSetting}>
+            <Text style={styles.text}>{I18n.t('shareSNS')}</Text>
+            <FontAwesome5 name="line" size={ICON_BTN_SIZE} color="#1dcd00" style={styles.buttonIcon} onPress={() => this.shareApp(0)} />
+            <FontAwesome5 name="facebook" size={ICON_BTN_SIZE} color="#3B5998" style={styles.buttonIcon} onPress={() => this.shareApp(1)} />
+            <FontAwesome5 name="twitter-square" size={ICON_BTN_SIZE} color="#55acee" style={styles.buttonIcon} onPress={() => this.shareApp(2)} />
+          </View>
           <View style={styles.rowTextSetting}>
             <Text style={styles.text}>{I18n.t('initializeDes')}</Text>
             <Button

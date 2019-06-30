@@ -20,7 +20,7 @@ import { getDistanceMeter } from './utils';
 import I18n from '../i18n/index';
 
 let isChecking = false;
-let alermList = null;
+let beforeAlermList = null;
 const LOCATION_TASK_NAME = 'background-location-task';
 
 export async function _handleNotification(notification) {
@@ -234,31 +234,35 @@ export async function taskManager(index, { data: { eventType, region }, error })
     return;
   }
   // AsyncStorageより情報取得
-  alermList = await getAllStorageDataAlermList();
+  let alermList = await getAllStorageDataAlermList();
   if (eventType === Location.GeofencingEventType.Enter) {
     // 内に入ったら通知処理を行う
     checkGeofenceInside(alermList[index]);
   } else if (eventType === Location.GeofencingEventType.Exit) {
     // 外に出たら通知を有効にする
-    let ownInfo = await getStorageDataOwnInfo();
-    checkGeofenceOutside(alermList[index], ownInfo);
+    checkGeofenceOutside(alermList[index]);
   }
 }
 
 // ジオフェンスMode
-export async function startGeofencing(alermList) {
-  stopAllGeofencing(alermList.length);
+export async function startGeofencing(storeAlermList) {
+  stopAllGeofencing(storeAlermList.length);
   let index = 0;
-  for (let alermItem of alermList) {
-    Location.startGeofencingAsync(GEO_TASK_NAME + index, [{
-      latitude: alermItem.coords.latitude,
-      longitude: alermItem.coords.latitude,
-      radius: alermItem.alermDistance,
-      notifyOnEnter: true,
-      notifyOnExit: true,
-    }]);
+  for (let alermItem of storeAlermList) {
+    // 前回設定と異なる場合は再設定
+    if (beforeAlermList.length <= index || beforeAlermList[index] !== alermItem) {
+      Location.startGeofencingAsync(GEO_TASK_NAME + index, [{
+        latitude: alermItem.coords.latitude,
+        longitude: alermItem.coords.latitude,
+        radius: alermItem.alermDistance,
+        notifyOnEnter: true,
+        notifyOnExit: true,
+      }]);
+    }
     index++;
   }
+  // 前回設定を保持
+  beforeAlermList = storeAlermList;
 }
 
 // ジオフェンスMode

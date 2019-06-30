@@ -6,8 +6,10 @@ export const DISPLAY_HEADER_ICON = false;
 export const GEOFENCE_ON = true;
 // export const SETTING_APP_URL = 'app-settings://notification/expo';// TODO:
 export const SETTING_APP_URL = 'app-settings:';// TODO:
-export const APP_STORE_ID = '1467611043';// TODO:
-export const PLAY_STORE_ID = 'id1467611043';// TODO:
+export const APP_STORE_ID = '1467611043';
+export const APP_URL = "https://apps.apple.com/sp/app/" + APP_STORE_ID;
+export const PLAY_STORE_ID = '1467611043';// TODO:
+export const ICON_BTN_SIZE = 35;
 
 export const ALERM_LIST = {
   ADD: 'ADD' + unique,
