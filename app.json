@@ -2,10 +2,10 @@
   "expo": {
     "name": "スルーサイン",
     "description": "No description",
-    "slug": "snack-BJoj3e5R6",
+    "slug": "snack-Sy4Ing904",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.11",
+    "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/snack-icon.png",
@@ -28,7 +28,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "jp.kuwatan.norisugoKuwa",
+      "bundleIdentifier": "jp.kuwatan.throughSign",
       "config": {
         "googleMapsApiKey": "AIzaSyAC6V5J-1VTfpx7tweX9VUHUSqtSx4jOcg"
       },
