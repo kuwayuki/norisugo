@@ -20,6 +20,7 @@ import {
   getCurrentPosition,
   startGeofencing,
   stopGeofencing,
+  stopAllGeofencing,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
 import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
@@ -175,6 +176,7 @@ export class Top extends Component {
       // 設定済情報取得
       await json.getJsonData(this.props);
       await utils.initNotification();
+      await stopAllGeofencing(0);
     } catch (e) {
       // alert(e.message);
     }
@@ -255,7 +257,7 @@ export class Top extends Component {
         backgroundColor: 'red',
         underlayColor: 'rgba(0,0,0,1)',
         onPress: () => {
-          stopGeofencing(index);  // TODO:
+          stopGeofencing(index);
           this.props.deleteAlermItem(index);
           json.deleteAsyncStorage(index);
         },
