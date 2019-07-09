@@ -45,6 +45,7 @@ export default {
   sortReverse: '逆順',
   other: 'その他',
   pay: '有料版',
+  shareSNS: 'SNSで共有',
   payDes: '有料版を購入\n・8個(+1)まで地点登録可能\n・広告なし',
   initialize: '初期化',
   initializeQuestion: '初期化します、よろしいですか？',
@@ -84,7 +85,7 @@ export default {
   allowNotification: '通知を許可する',
   alermNotification:
     'このアプリは目的地付近に近づいたら、通知でお知らせすることができます。\nご利用したい場合は通知を許可してご利用下さい。',
-  alermLocation: '位置情報設定を「常に許可」または「このAppの使用中のみ許可」にしてから起動して下さい',
+  alermLocation: '位置情報設定を「常に許可」にしてから起動して下さい',
   searchInit: '現地',
   search: '検索',
   searchResult: '検索結果：',

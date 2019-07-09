@@ -294,6 +294,10 @@ export const styles = StyleSheet.create({
     width: 90,
     paddingRight: 20,
   },
+  buttonIcon: {
+    width: 50,
+    paddingRight: 10,
+  },
   text: {
     width: '60%',
     paddingLeft: 30,

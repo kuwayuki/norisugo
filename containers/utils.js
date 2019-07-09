@@ -22,8 +22,7 @@ export const distanceMtoKm = meter => {
 
 const isOkLocationCheck = permission => {
   if (
-    permission.ios.scope === 'always' ||
-    permission.ios.scope === 'whenInUse'
+    permission.ios.scope === 'always'
     // (Platform.isPad && permission.ios.scope === 'whenInUse')
   ) {
     return true;
