@@ -15,11 +15,9 @@ import { styles } from '../containers/styles';
 import * as utils from '../containers/utils';
 import * as json from '../containers/jsonFile';
 import {
-  startLocation,
   clearBefore,
   getCurrentPosition,
   startGeofencing,
-  stopGeofencing,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
 import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
@@ -185,7 +183,7 @@ export class Top extends Component {
       await this.getAsyncPosition();
       if (this.props.ownInfo.isFree) {
         // 2個以上の場合は必ず広告を表示
-        admobInterstitialInit();
+        await admobInterstitialInit();
       }
 
       this.timer = setInterval(async () => {
@@ -255,7 +253,6 @@ export class Top extends Component {
         backgroundColor: 'red',
         underlayColor: 'rgba(0,0,0,1)',
         onPress: () => {
-          stopGeofencing(index);  // TODO:
           this.props.deleteAlermItem(index);
           json.deleteAsyncStorage(index);
         },
@@ -358,7 +355,6 @@ export class Top extends Component {
         {this.props.ownInfo.isNearestDisplay &&
           nearest &&
           nearestStation(this.state.nearestStation)}
-        {this.props.ownInfo.isFree && admobBanner()}
       </View>
     );
   }
