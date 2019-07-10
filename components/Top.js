@@ -201,7 +201,6 @@ export class Top extends Component {
       // 設定が変わったら再設定
       clearBefore();
       startGeofencing(this.props.alermList);
-      // startLocation(this.props.ownInfo, this.props.alermList); TODO:
       before = this.props.alermList;
     }
   }

@@ -3,7 +3,6 @@ export default {
   appTitle: 'スルーサイン',
   blank: '',
   setting: '設定',
-  goSet: '設定する',
   cancel: 'キャンセル',
   newRegist: '新規登録',
   update: '更新',
@@ -96,6 +95,4 @@ export default {
   reviewQuestion:
     'いつもご利用ありがとうございます。\n\n' +
     'もしよろしければ評価をしてくれませんか？アプリ評価にご協力頂けたら登録できる地点が1つ増えます。',
-  reviewDetailQuestion: 'フィードバックをありがとうございます。\nレビューを書くこともできます。',
-  writeReview: 'レビューを書く',
 };
