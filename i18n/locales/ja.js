@@ -44,7 +44,7 @@ export default {
   sortNormal: '正順',
   sortReverse: '逆順',
   other: 'その他',
-  pay: '120円',
+  pay: '有料版',
   shareSNS: 'SNSで共有',
   payDes: '有料版を購入\n・8個(+1)まで地点登録可能\n・広告なし',
   initialize: '初期化',

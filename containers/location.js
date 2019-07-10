@@ -1,6 +1,3 @@
-import {
-  Speech,
-} from 'expo';
 import * as Location from 'expo-location'
 import * as TaskManager from 'expo-task-manager'
 import {
@@ -20,19 +17,17 @@ import { getDistanceMeter } from './utils';
 import I18n from '../i18n/index';
 
 let isChecking = false;
-let beforeAlermList = null;
+let alermList = null;
 const LOCATION_TASK_NAME = 'background-location-task';
 
 export async function _handleNotification(notification) {
   if (notification.origin === 'selected') {
     //バックグラウンドで通知
   } else if (notification.origin === 'received') {
-    if (isChecking) {
-      //フォアグラウンドで通知
-      const PATTERN = [1000, 2000, 3000];
-      Vibration.vibrate(PATTERN);
-      Alert.alert(I18n.t('blank'), notification.data.message);
-    }
+    //フォアグラウンドで通知
+    const PATTERN = [1000, 2000, 3000];
+    Vibration.vibrate(PATTERN);
+    Alert.alert(I18n.t('blank'), notification.data.message);
   }
 }
 
@@ -181,98 +176,45 @@ export async function startLocation(ownInfo, alermList) {
   }
 }
 
-const GEO_TASK_NAME = 'background-geo-task_';
-const No0 = 0;
-const No1 = 1;
-const No2 = 2;
-const No3 = 3;
-const No4 = 4;
-const No5 = 5;
-const No6 = 6;
-const No7 = 7;
-const No8 = 8;
-const No9 = 9;
-const No10 = 10;
-const MAX = No10;
-TaskManager.defineTask(GEO_TASK_NAME + No0, ({ data: { eventType, region }, error }) => {
-  taskManager(No0, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No1, ({ data: { eventType, region }, error }) => {
-  taskManager(No1, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No2, ({ data: { eventType, region }, error }) => {
-  taskManager(No2, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No3, ({ data: { eventType, region }, error }) => {
-  taskManager(No3, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No4, ({ data: { eventType, region }, error }) => {
-  taskManager(No4, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No5, ({ data: { eventType, region }, error }) => {
-  taskManager(No5, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No6, ({ data: { eventType, region }, error }) => {
-  taskManager(No6, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No7, ({ data: { eventType, region }, error }) => {
-  taskManager(No7, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No8, ({ data: { eventType, region }, error }) => {
-  taskManager(No8, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No9, ({ data: { eventType, region }, error }) => {
-  taskManager(No9, { data: { eventType, region }, error });
-});
-TaskManager.defineTask(GEO_TASK_NAME + No10, ({ data: { eventType, region }, error }) => {
-  taskManager(No10, { data: { eventType, region }, error });
-});
-
-export async function taskManager(index, { data: { eventType, region }, error }) {
+const GEO_TASK_NAME = 'background-geo-task';
+TaskManager.defineTask(GEO_TASK_NAME, async ({ data: { eventType, region }, error }) => {
   if (error) {
-    console.error(error.message);
     return;
   }
-  // AsyncStorageより情報取得
-  let alermList = await getAllStorageDataAlermList();
-  if (eventType === Location.GeofencingEventType.Enter) {
-    // 内に入ったら通知処理を行う
-    checkGeofenceInside(alermList[index]);
-  } else if (eventType === Location.GeofencingEventType.Exit) {
-    // 外に出たら通知を有効にする
-    checkGeofenceOutside(alermList[index]);
-  }
-}
 
-// ジオフェンスMode
-export async function startGeofencing(storeAlermList) {
-  stopAllGeofencing(storeAlermList.length);
-  let index = 0;
-  for (let alermItem of storeAlermList) {
-    // 前回設定と異なる場合は再設定
-    if (beforeAlermList.length <= index || beforeAlermList[index] !== alermItem) {
-      Location.startGeofencingAsync(GEO_TASK_NAME + index, [{
-        latitude: alermItem.coords.latitude,
-        longitude: alermItem.coords.latitude,
-        radius: alermItem.alermDistance,
-        notifyOnEnter: true,
-        notifyOnExit: true,
-      }]);
+  alermList = await getAllStorageDataAlermList();
+  let targetALermList = alermList.map(alermItem => {
+    if (alermItem.coords.latitude == region.latitude &&
+      alermItem.coords.longitude == region.longitude &&
+      alermItem.alermDistance == region.radius
+    ) {
+      return alermItem;
     }
-    index++;
+  });
+  for (let alermItem of targetALermList) {
+    if (eventType === Location.GeofencingEventType.Enter) {
+      checkGeofenceInside(alermItem);
+    } else if (eventType === Location.GeofencingEventType.Exit) {
+      checkGeofenceOutside(alermItem);
+    }
   }
-  // 前回設定を保持
-  beforeAlermList = storeAlermList;
+});
+
+// ジオフェンスMode
+export async function startGeofencing(alermList) {
+  let regions = alermList.map((alermItem) => {
+    return {
+      latitude: alermItem.coords.latitude,
+      longitude: alermItem.coords.longitude,
+      radius: alermItem.alermDistance,
+      notifyOnEnter: true,
+      notifyOnExit: true,
+    };
+  });
+  await Location.startGeofencingAsync(GEO_TASK_NAME, regions);
 }
 
 // ジオフェンスMode
-export async function stopGeofencing(index) {
-  Location.stopGeofencingAsync(GEO_TASK_NAME + index);
-}
-
-// ジオフェンスMode
-export async function stopAllGeofencing(index) {
-  for (let i = index; i < MAX + 1; i++) {
-    Location.stopGeofencingAsync(GEO_TASK_NAME + i);
-  }
+export async function stopAllGeofencing() {
+  Location.stopGeofencingAsync(GEO_TASK_NAME);
 }

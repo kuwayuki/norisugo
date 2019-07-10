@@ -153,39 +153,55 @@ export async function checkPosition(ownInfo, alermList) {
   return;
 }
 
-// Geofence:通知するかチェック
-export async function checkGeofenceInside(alermItem) {
+function isCheckInside(alermItem) {
   // 有効の場合のみチェック
   if (alermItem.isAvailable) {
     // 未通知チェック
     if (!alermItem.isAlermed) {
       // 曜日チェック
-      if (!isCheckDayWeek(alermItem)) return;
+      if (!isCheckDayWeek(alermItem)) return false;
 
       // 時間チェック
-      if (!isCheckTime(alermItem)) return;
+      if (!isCheckTime(alermItem)) return false;
 
-      // 対象範囲なので通知を行う
-      await Notifications.presentLocalNotificationAsync({
-        title: I18n.t('appTitle'),
-        body: alermItem.alermMessage,
-        sound: true,
-        data: {
-          message: alermItem.alermMessage,
-        },
-      });
-      alermItem.isAlermed = true;
-      alermItem.alermTime = new Date().getTime();
-      addAsyncStorage(alermItem);
+      return true;
     }
   }
+  return false;
+}
+
+// Geofence:通知するかチェック
+export async function checkGeofenceInside(alermItem) {
+  // 有効の場合のみチェック
+  if (isCheckInside(alermItem)) {
+    // 対象範囲なので通知を行う
+    await Notifications.presentLocalNotificationAsync({
+      title: I18n.t('appTitle'),
+      body: alermItem.alermMessage,
+      sound: true,
+      data: {
+        message: alermItem.alermMessage,
+      },
+    });
+    alermItem.isAlermed = true;
+    alermItem.alermTime = new Date().getTime();
+    addAsyncStorage(alermItem);
+  }
   return;
+}
+
+function isCheckOutside(alermItem) {
+  // 通知済みの場合だけはずす
+  if (alermItem.isAlermed) {
+    return true;
+  }
+  return false;
 }
 
 // Geofence:通知オンにするかチェック
 export async function checkGeofenceOutside(alermItem) {
   // 通知済みの場合だけはずす
-  if (alermItem.isAlermed) {
+  if (isCheckOutside(alermItem)) {
     alermItem.isAlermed = false;
     addAsyncStorage(alermItem);
   }
