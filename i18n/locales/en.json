@@ -1,0 +1,5 @@
+{
+    "name": "ThroughSign",
+    "NSLocationWhenInUseUsageDescription": "This app uses location information to determine if the destination has been approached.\r\n\r\nSet location service to 'always'.",
+    "NSLocationAlwaysAndWhenInUseUsageDescription": "This app uses location information to determine if the destination has been approached.\r\n\r\nSet location service to 'always'."
+}

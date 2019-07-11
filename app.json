@@ -5,9 +5,13 @@
     "slug": "snack-Sy4Ing904",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
+    "locales": {
+      "ja": "./i18n/locales/ja.json",
+      "en": "./i18n/locales/en.json"
+    },
     "icon": "./assets/snack-icon.png",
     "loading": {
       "icon": "./assets/snack-icon.png",
