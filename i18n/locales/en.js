@@ -67,7 +67,6 @@ export default {
   balanced: 'standard',
   high: 'High',
   highest: 'Best',
->>>>>>> origin/master
   best: 'MAX',
   sortRegist: 'Registration',
   sortDistance: 'Distance',
@@ -83,8 +82,8 @@ export default {
   allowNotification: 'Allow notification',
   alermNotification: 'This app can notify you by notification when it gets close to the destination. If you want to use please allow notification.',
   alermLocation: 'Please set on GPS setting "always"',
-  searchInit: 'Local',
-  search: 'Search',
+  searchInit: 'Loc',
+  search: 'Srch',
   searchResult: 'search results:',
   searchSuccessMessage: 'Found.',
   searchErrorMessage: 'No located. Pease search within 50 km from the current location.',
