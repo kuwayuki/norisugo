@@ -60,7 +60,7 @@ export class Setting extends React.Component {
     switch (type) {
       case 0:
         // Line
-        baseUrl = "https://timeline.line.me/social-plugin/share?url=";
+        baseUrl = "https://social-plugins.line.me/lineit/share?url=";
         break;
       case 1:
         // facebook
