@@ -1,0 +1,5 @@
+{
+    "name": "ｽﾙｰｻｲﾝLite",
+    "NSLocationWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。",
+    "NSLocationAlwaysAndWhenInUseUsageDescription": "このアプリは、目的地に近づいたかを判断するために位置情報を利用します。\r\n\r\n位置情報サービスは「常に許可」を設定して下さい。"
+}
