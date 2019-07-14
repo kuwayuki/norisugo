@@ -15,6 +15,8 @@ import { styles } from '../containers/styles';
 import * as utils from '../containers/utils';
 import * as json from '../containers/jsonFile';
 import {
+  clearBefore,
+  startLocation,
   getCurrentPosition,
   startGeofencing,
   stopAllGeofencing,
@@ -200,7 +202,9 @@ export class Top extends Component {
   async componentDidUpdate() {
     if (before != this.props.alermList) {
       // 設定が変わったら再設定
-      startGeofencing(this.props.alermList);
+      // startGeofencing(this.props.alermList); // TODO:Geofence
+      clearBefore();
+      startLocation(this.props.ownInfo, this.props.alermList);
       before = this.props.alermList;
     }
   }

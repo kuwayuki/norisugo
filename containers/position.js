@@ -1,4 +1,4 @@
-import { getNumTime, getTimeFromDateTime } from './utils';
+import { getDistanceMeter, getNumTime, getTimeFromDateTime } from './utils';
 import { addAsyncStorage } from './jsonFile';
 import { Notifications } from 'expo';
 import I18n from '../i18n/index';
@@ -138,4 +138,71 @@ export async function checkGeofenceOutside(alermItem) {
     alermItem.isAlermed = false;
     addAsyncStorage(alermItem);
   }
+}
+
+// 登録地点が一定距離内に存在するかチェック
+export async function checkPosition(ownInfo, alermList) {
+  let isReturn = false;
+
+  // 対象が通知範囲内かのチェック
+  for (let alermItem of alermList) {
+    // 有効の場合のみチェック
+    if (alermItem.isAvailable) {
+      // console.log('通知チェック！');
+      let distance = getDistanceMeter(ownInfo.coords, alermItem.coords);
+      let isIn = isInside(distance, alermItem.alermDistance);
+      // 未通知チェック
+      if (!alermItem.isAlermed) {
+        if (!isIn) {
+          // 範囲外なら何もしない
+          continue;
+        }
+        // 曜日チェック
+        if (!isCheckDayWeek(alermItem)) continue;
+
+        // 時間チェック
+        if (!isCheckTime(alermItem)) continue;
+
+        // 対象範囲なので通知を行う
+        await Notifications.presentLocalNotificationAsync({
+          title: I18n.t('appTitle'),
+          body: alermItem.alermMessage,
+          sound: ownInfo.sound,
+          data: {
+            message: alermItem.alermMessage,
+          },
+        });
+        alermItem.isAlermed = true;
+        alermItem.alermTime = new Date().getTime();
+        addAsyncStorage(alermItem);
+      } else {
+        // 通知済の場合
+        let isOK = false;
+
+        // 範囲外なら未通知に変更
+        if (ownInfo.recoveryDistance) {
+          if (isIn) {
+            continue;
+          } else {
+            isOK = true;
+          }
+        }
+
+        // 一定時間経過なら未通知に変更
+        if (ownInfo.recoveryTime > 0) {
+          if (!elapsedTime(ownInfo.recoveryTime, alermItem.alermTime)) {
+            continue;
+          } else {
+            isOK = true;
+          }
+        }
+
+        if (isOK) {
+          alermItem.isAlermed = false;
+          addAsyncStorage(alermItem);
+        }
+      }
+    }
+  }
+  return;
 }
