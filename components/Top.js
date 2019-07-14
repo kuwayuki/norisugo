@@ -17,6 +17,7 @@ import * as json from '../containers/jsonFile';
 import {
   getCurrentPosition,
   startGeofencing,
+  stopAllGeofencing,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
 import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
@@ -172,6 +173,7 @@ export class Top extends Component {
       // 設定済情報取得
       await json.getJsonData(this.props);
       await utils.initNotification();
+      await stopAllGeofencing();
     } catch (e) {
       // alert(e.message);
     }

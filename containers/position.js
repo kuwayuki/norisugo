@@ -107,8 +107,11 @@ function isCheckInside(alermItem) {
 export async function checkGeofenceInside(alermItem) {
   // 有効の場合のみチェック
   if (isCheckInside(alermItem)) {
+    alermItem.isAlermed = true;
+    alermItem.alermTime = new Date().getTime();
+    addAsyncStorage(alermItem);
     // 対象範囲なので通知を行う
-    await Notifications.presentLocalNotificationAsync({
+    Notifications.presentLocalNotificationAsync({
       title: I18n.t('appTitle'),
       body: alermItem.alermMessage,
       sound: true,
@@ -116,9 +119,6 @@ export async function checkGeofenceInside(alermItem) {
         message: alermItem.alermMessage,
       },
     });
-    alermItem.isAlermed = true;
-    alermItem.alermTime = new Date().getTime();
-    addAsyncStorage(alermItem);
   }
   return;
 }

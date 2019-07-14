@@ -57,21 +57,25 @@ export class Setting extends React.Component {
 
   shareApp(type) {
     let baseUrl = "https://timeline.line.me/social-plugin/share?url=";
+    let linkUrl = "";
     switch (type) {
       case 0:
         // Line
-        baseUrl = "https://social-plugins.line.me/lineit/share?url=";
+        baseUrl = "http://line.me/R/msg/text/?";
+        linkUrl = baseUrl + APP_URL;
         break;
       case 1:
         // facebook
-        baseUrl = "http://www.facebook.com/sharer.php?u=";
+        baseUrl = "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fapps.apple.com%2Fjp%2Fapp%2Fid1471345749&amp;src=sdkpreparse";
+        linkUrl = baseUrl;
         break;
       case 2:
         // twitter
         baseUrl = "http://twitter.com/share?url=";
+        linkUrl = baseUrl + APP_URL;
         break;
     }
-    Linking.openURL(baseUrl + APP_URL);
+    Linking.openURL(linkUrl);
   }
 
   SORT_KIND = [I18n.t('sortRegist'), I18n.t('sortDistance')];
