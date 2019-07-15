@@ -15,8 +15,11 @@ import { styles } from '../containers/styles';
 import * as utils from '../containers/utils';
 import * as json from '../containers/jsonFile';
 import {
+  clearBefore,
+  startLocation,
   getCurrentPosition,
   startGeofencing,
+  stopAllGeofencing,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
 import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
@@ -172,6 +175,7 @@ export class Top extends Component {
       // 設定済情報取得
       await json.getJsonData(this.props);
       await utils.initNotification();
+      await stopAllGeofencing();
     } catch (e) {
       // alert(e.message);
     }
@@ -198,7 +202,9 @@ export class Top extends Component {
   async componentDidUpdate() {
     if (before != this.props.alermList) {
       // 設定が変わったら再設定
-      startGeofencing(this.props.alermList);
+      // startGeofencing(this.props.alermList); // TODO:Geofence
+      clearBefore();
+      startLocation(this.props.ownInfo, this.props.alermList);
       before = this.props.alermList;
     }
   }
