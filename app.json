@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "スルーサイン Lite",
+    "name": "ThroughSignLite",
     "description": "No description",
     "slug": "snack-H1UtDQHAN",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "locales": {

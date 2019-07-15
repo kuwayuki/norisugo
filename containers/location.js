@@ -17,7 +17,6 @@ import { getDistanceMeter } from './utils';
 import I18n from '../i18n/index';
 
 let isChecking = false;
-let alermList = null;
 const LOCATION_TASK_NAME = 'background-location-task';
 
 export async function _handleNotification(notification) {
@@ -92,7 +91,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
     const { locations } = data;
     await mergeStorageDataOwnInfo(locations[0]);
     // AsyncStorageより情報取得
-    alermList = await getAllStorageDataAlermList();
+    let alermList = await getAllStorageDataAlermList();
     let ownInfo = await getStorageDataOwnInfo();
     checkPosition(ownInfo, alermList);
     startLocation(ownInfo, alermList);
