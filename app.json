@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "スルーサイン",
+    "name": "ThroughSign",
     "description": "No description",
     "slug": "snack-Sy4Ing904",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "locales": {
@@ -28,6 +28,18 @@
         "mp4",
         "otf",
         "xml"
+      ]
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "yuki-kuwahara",
+            "project": "norisugokuwa",
+            "authToken": "9ac14d5b955f41bc93a568b069781af87a545232955945e58d13e8d994467a10"
+          }
+        }
       ]
     },
     "ios": {
