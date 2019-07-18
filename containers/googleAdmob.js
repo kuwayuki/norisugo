@@ -49,21 +49,6 @@ export async function admobInterstitialNumCount(count, total) {
   }
 }
 
-async function storeDetailReview() {
-  Alert.alert(I18n.t('reviewTitle'), I18n.t('reviewQuestion'), [
-    {
-      text: 'OK',
-      onPress: async () => {
-        const url = StoreReview.storeUrl();
-        Linking.openURL(url);
-      },
-    },
-    {
-      text: 'Cancel',
-    },
-  ]);
-}
-
 export const storeReview = props => {
   if (props.ownInfo.reviewed) return;
   if (StoreReview.isSupported()) {
