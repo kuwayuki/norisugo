@@ -109,6 +109,7 @@ export class NewRegist extends React.Component {
             searchResult: data.results.length + I18n.t('searchSuccessMessage'),
             alermList: data.results,
           });
+          this.listSelect(data.results[0]);
           // キーボード非表示
           Keyboard.dismiss();
         } else {
