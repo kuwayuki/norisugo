@@ -1,4 +1,5 @@
 import * as Location from 'expo-location'
+import { BackgroundFetch } from 'expo';
 import * as TaskManager from 'expo-task-manager'
 import {
   mergeStorageDataOwnInfo,
@@ -15,6 +16,7 @@ import {
 import { Alert, Vibration } from 'react-native';
 import { getDistanceMeter } from './utils';
 import I18n from '../i18n/index';
+import { GEOFENCE_ON } from '../constants/constants';
 
 let isChecking = false;
 const LOCATION_TASK_NAME = 'background-location-task';
@@ -52,6 +54,9 @@ TaskManager.defineTask(GEO_TASK_NAME, async ({ data: { eventType, region }, erro
     }
   });
   for (let alermItem of targetALermList) {
+    if (alermItem == null) {
+      continue;
+    }
     if (eventType === Location.GeofencingEventType.Enter) {
       checkGeofenceInside(alermItem);
     } else if (eventType === Location.GeofencingEventType.Exit) {
@@ -71,7 +76,11 @@ export async function startGeofencing(alermList) {
       notifyOnExit: true,
     };
   });
-  await Location.startGeofencingAsync(GEO_TASK_NAME, regions);
+  if (regions == null || regions.length == 0) {
+    stopAllGeofencing();
+  } else {
+    await Location.startGeofencingAsync(GEO_TASK_NAME, regions);
+  }
 }
 
 // ジオフェンスMode
@@ -172,12 +181,7 @@ async function getBestPerformance(ownCoords, alermList) {
   return { accuracy: accuracy, distance: alermDistance };
 }
 
-let beforeSetting = null;
-export const clearBefore = () => {
-  beforeSetting = null;
-};
 export async function startLocation(ownInfo, alermList) {
-  if (beforeSetting != null && !isChecking) return;
   let accuracy = Location.Accuracy.Balanced;
   let distanceInterval = 10;
   if (ownInfo != null) {
@@ -198,23 +202,34 @@ export async function startLocation(ownInfo, alermList) {
       // distanceInterval = ownInfo.distance;
     }
   }
-  let nextSetting = { accuracy: accuracy, distance: distanceInterval };
-  if (ownInfo.debug) {
-    console.log(nextSetting);
-  }
-  if (
-    beforeSetting == null ||
-    (beforeSetting.accuracy != nextSetting.accuracy ||
-      beforeSetting.distance != nextSetting.distance)
-  ) {
-    if (ownInfo.debug) {
-      console.log('change');
-    }
-    beforeSetting = nextSetting;
-    Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-      accuracy: accuracy,
-      distanceInterval: distanceInterval,
-      pausesUpdatesAutomatically: true
-    });
-  }
+  Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
+    accuracy: accuracy,
+    distanceInterval: distanceInterval,
+    pausesUpdatesAutomatically: true
+  });
 }
+
+// BackgroundFetch
+const FETCH_TASK_NAME = 'background-fetch-task';
+export async function startBackgroundFetch() {
+  await BackgroundFetch.unregisterTaskAsync(FETCH_TASK_NAME);
+  BackgroundFetch.setMinimumIntervalAsync(60 * 15);
+  BackgroundFetch.registerTaskAsync(FETCH_TASK_NAME, { minimumInterval: 60 * 15 })
+}
+
+TaskManager.defineTask(FETCH_TASK_NAME, async () => {
+  try {
+    // // AsyncStorageより情報取得
+    let alermList = await getAllStorageDataAlermList();
+    if (GEOFENCE_ON) {
+      startGeofencing(alermList);
+    }
+    else {
+      let ownInfo = await getStorageDataOwnInfo();
+      startLocation(ownInfo, alermList);
+    }
+  } catch (error) {
+    return BackgroundFetch.Result.Failed;
+  }
+  return;
+});

@@ -12,6 +12,10 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { rootReducer } from './reducers/index';
 import I18n from './i18n/index';
+// Remove this once Sentry is correctly setup.
+import Sentry from 'sentry-expo';
+Sentry.enableInExpoDevelopment = true;
+Sentry.config('https://d71129879b7648e3a0db2324e094d522@sentry.io/1482364').install();
 
 export const store = createStore(rootReducer);
 
