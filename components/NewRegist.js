@@ -51,6 +51,10 @@ export class NewRegist extends React.Component {
     if (region == null || region.latitude == null || region.longitude == null) {
       region = await getCurrentPosition();
     }
+    if (region == null || region.latitude == null || region.longitude == null) {
+      region.latitude = 35.681236;
+      region.longitude = 139.767125;
+    }
     region.latitudeDelta = 0.05;
     region.longitudeDelta = 0.05;
     this.setState({ region, isMapRead: true })
