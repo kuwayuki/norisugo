@@ -8,7 +8,7 @@ export const GEOFENCE_ON = true;
 export const SETTING_APP_URL = 'app-settings:';// TODO:
 export const APP_STORE_ID = '1471345749';
 export const APP_FREE_STORE_ID = '1471345749';
-export const APP_URL = "https://apps.apple.com/jp/app/" + APP_FREE_STORE_ID;
+export const APP_URL = "https://apps.apple.com/jp/app/id" + APP_FREE_STORE_ID;
 export const PLAY_STORE_ID = '1467611043';// TODO:
 export const ICON_BTN_SIZE = 35;
 
