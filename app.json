@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ThroughSignLite",
+    "name": "ThrSignLite",
     "description": "No description",
     "slug": "snack-H1UtDQHAN",
     "privacy": "unlisted",
     "sdkVersion": "33.0.0",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "locales": {
