@@ -22,7 +22,7 @@ import {
   stopAllGeofencing,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
-import { admobBanner, admobInterstitialInit } from '../containers/googleAdmob';
+import { admobBanner, admobInterstitialInit, storeReview } from '../containers/googleAdmob';
 import {
   setOwnInfo,
   setOwnInfoCoords,
@@ -177,6 +177,14 @@ export class Top extends Component {
       await utils.initNotification();
       // await stopAllGeofencing();
       startBackgroundFetch();
+      if (!this.props.ownInfo.isFree) {
+        // 2つ以上ならレビュー表示
+        if (this.props.alermList.length > 2) {
+          storeReview(this.props);
+          this.props.setOwnInfoReviewed(true);
+          await json.mergeStorageDataOwnInfo({ reviewed: true });
+        }
+      }
     } catch (e) {
       // alert(e.message);
     }

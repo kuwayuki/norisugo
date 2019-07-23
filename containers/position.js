@@ -111,7 +111,7 @@ export async function checkGeofenceInside(alermItem) {
     alermItem.alermTime = new Date().getTime();
     addAsyncStorage(alermItem);
     // 対象範囲なので通知を行う
-    Notifications.presentLocalNotificationAsync({
+    await Notifications.presentLocalNotificationAsync({
       title: I18n.t('appTitle'),
       body: alermItem.alermMessage,
       sound: true,
