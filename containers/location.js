@@ -211,11 +211,6 @@ export async function startLocation(ownInfo, alermList) {
 
 // BackgroundFetch
 const FETCH_TASK_NAME = 'background-fetch-task';
-export async function startBackgroundFetch() {
-  await BackgroundFetch.unregisterTaskAsync(FETCH_TASK_NAME);
-  BackgroundFetch.setMinimumIntervalAsync(60 * 15);
-  BackgroundFetch.registerTaskAsync(FETCH_TASK_NAME, { minimumInterval: 60 * 15 })
-}
 
 TaskManager.defineTask(FETCH_TASK_NAME, async () => {
   try {
@@ -233,3 +228,8 @@ TaskManager.defineTask(FETCH_TASK_NAME, async () => {
   }
   return;
 });
+
+export async function startBackgroundFetch() {
+  BackgroundFetch.setMinimumIntervalAsync(60 * 15);
+  BackgroundFetch.registerTaskAsync(FETCH_TASK_NAME, { minimumInterval: 60 * 15 })
+}
