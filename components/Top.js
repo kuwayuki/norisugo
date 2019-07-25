@@ -176,7 +176,7 @@ export class Top extends Component {
       await json.getJsonData(this.props);
       await utils.initNotification();
       // await stopAllGeofencing();
-      startBackgroundFetch();
+      // startBackgroundFetch();
       if (!this.props.ownInfo.isFree) {
         // 2つ以上ならレビュー表示
         if (this.props.alermList.length > 2) {
