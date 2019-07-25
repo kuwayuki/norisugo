@@ -40,10 +40,10 @@ export async function getCurrentPosition() {
 const GEO_TASK_NAME = 'background-geo-task';
 TaskManager.defineTask(GEO_TASK_NAME, async ({ data: { eventType, region }, error }) => {
   let alermList = await getAllStorageDataAlermList();
-  if (error) {
-    startGeofencing(alermList);
-    return;
-  }
+  // if (error) {
+  //   startGeofencing(alermList);
+  //   return;
+  // }
 
   let targetALermList = alermList.map(alermItem => {
     if (alermItem.coords.latitude == region.latitude &&
@@ -79,7 +79,7 @@ export async function startGeofencing(alermList) {
   if (regions == null || regions.length == 0) {
     stopAllGeofencing();
   } else {
-    await Location.startGeofencingAsync(GEO_TASK_NAME, regions);
+    Location.startGeofencingAsync(GEO_TASK_NAME, regions);
   }
 }
 
