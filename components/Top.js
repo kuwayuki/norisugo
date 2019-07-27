@@ -6,6 +6,7 @@ import {
   Switch,
   TouchableOpacity,
   ScrollView,
+  AppState
 } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Swipeout from 'react-native-swipeout';
@@ -22,7 +23,7 @@ import {
   stopAllGeofencing,
 } from '../containers/location';
 import { topHeader } from '../containers/header';
-import { admobBanner, admobInterstitialInit, storeReview } from '../containers/googleAdmob';
+import { admobBanner, admobInterstitialInit, randomStoreReview } from '../containers/googleAdmob';
 import {
   setOwnInfo,
   setOwnInfoCoords,
@@ -85,7 +86,6 @@ const exceptStationLine = line => {
 
 const getRimDistance = (coords1, item) => {
   let status = utils.getStatusIcon(item);
-  let coords2 = item.coords;
   let alermDistance = item.alermDistance;
   let disstance = utils.getDistanceMeter(coords1, item.coords);
   let message = '';
@@ -178,11 +178,9 @@ export class Top extends Component {
       // await stopAllGeofencing();
       // startBackgroundFetch();
       if (!this.props.ownInfo.isFree) {
-        // 2つ以上ならレビュー表示
-        if (this.props.alermList.length > 2) {
-          storeReview(this.props);
-          this.props.setOwnInfoReviewed(true);
-          await json.mergeStorageDataOwnInfo({ reviewed: true });
+        // 1つ以上ならレビュー表示
+        if (this.props.alermList.length > 1) {
+          randomStoreReview(this.props);
         }
       }
     } catch (e) {
@@ -199,7 +197,9 @@ export class Top extends Component {
       }
 
       this.timer = setInterval(async () => {
-        await this.getAsyncPosition();
+        if (AppState.currentState === 'active') {
+          await this.getAsyncPosition();
+        }
       }, TIMER);
     }
   }

@@ -1,9 +1,57 @@
 import { getDistanceMeter, getNumTime, getTimeFromDateTime } from './utils';
 import { addAsyncStorage } from './jsonFile';
 import { Notifications } from 'expo';
+import * as DEF from '../constants/constants';
 import I18n from '../i18n/index';
 
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+
+// 地点までの距離が、通知距離内かのチェック
+export async function notificateAlerm(alermItem, ownInfo) {
+  let localNotification = {
+    title: I18n.t('appTitle'),
+    body: alermItem.alermMessage,
+    android: {
+      sound: true,
+    },
+    ios: {
+      sound: true,
+    },
+    data: {
+      message: alermItem.alermMessage,
+    },
+  }
+  var repeatInterval = ownInfo.repeatInterval ? ownInfo.repeatInterval * 1000 : 1000;
+  var repeatCnt = ownInfo.repeatCnt ? ownInfo.repeatCnt : 1;
+  for (var step = 0; step < repeatCnt; step++) {
+    if (step == 0) {
+      await Notifications.presentLocalNotificationAsync(localNotification);
+    }
+    else {
+      let schedulingOptions = { time: (new Date()).getTime() + (repeatInterval * step) };
+      await Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
+    }
+  }
+  // await Notifications.presentLocalNotificationAsync(localNotification);
+  // await Notifications.presentLocalNotificationAsync({
+  //   title: I18n.t('appTitle'),
+  //   body: alermItem.alermMessage,
+  //   sound: true,
+  //   data: {
+  //     message: alermItem.alermMessage,
+  //   },
+  // });
+};
+
+export const stopNotification = (localNotificationId) => {
+  if (localNotificationId) {
+    Notifications.cancelAllScheduledNotificationsAsync(localNotificationId);
+  }
+  else {
+    Notifications.cancelAllScheduledNotificationsAsync();
+  }
+}
+
 // 地点までの距離が、通知距離内かのチェック
 export const isInside = (distance, alermDistance) => {
   if (distance < alermDistance) {
@@ -19,6 +67,7 @@ export const elapsedTime = (recoveryTime, alermTime) => {
   }
 
   var diff = new Date().getTime() - alermTime;
+  // 一定時間経過
   if (recoveryTime < diff / (1000 * 60)) {
     return true;
   }
@@ -97,6 +146,9 @@ function isCheckInside(alermItem) {
       // 時間チェック
       if (!isCheckTime(alermItem)) return false;
 
+      // 一定時間経過したかチェック
+      if (!elapsedTime(DEF.RECOVERY_TIME, alermItem.alermTime)) return false;
+
       return true;
     }
   }
@@ -104,21 +156,15 @@ function isCheckInside(alermItem) {
 }
 
 // Geofence:通知するかチェック
-export async function checkGeofenceInside(alermItem) {
+export async function checkGeofenceInside(alermItem, ownInfo) {
   // 有効の場合のみチェック
   if (isCheckInside(alermItem)) {
     alermItem.isAlermed = true;
     alermItem.alermTime = new Date().getTime();
     addAsyncStorage(alermItem);
+
     // 対象範囲なので通知を行う
-    await Notifications.presentLocalNotificationAsync({
-      title: I18n.t('appTitle'),
-      body: alermItem.alermMessage,
-      sound: true,
-      data: {
-        message: alermItem.alermMessage,
-      },
-    });
+    await notificateAlerm(alermItem, ownInfo);
   }
   return;
 }

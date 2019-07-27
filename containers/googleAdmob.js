@@ -13,7 +13,10 @@ const INTERSTITIAL = 'ca-app-pub-2103807205659646/2529019942';
 const MAX_NUM = 5;
 const ADMOB_IN_DISABLE = true;// TODO:
 
-export const random = () => {
+export const random = (num) => {
+  if (num) {
+    return Math.floor(Math.random() * Math.floor(num));
+  }
   return Math.floor(Math.random() * Math.floor(MAX_NUM));
 };
 
@@ -49,6 +52,12 @@ export async function admobInterstitialNumCount(count, total) {
   }
 }
 
+export const randomStoreReview = props => {
+  let randomNum = random(3);
+  if (randomNum == 0) {
+    storeReview(props);
+  }
+}
 export const storeReview = props => {
   if (props.ownInfo.reviewed) return;
   if (StoreReview.isSupported()) {

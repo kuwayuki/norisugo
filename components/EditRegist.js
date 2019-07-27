@@ -308,6 +308,9 @@ export class EditRegist extends React.Component {
                 <Text>{I18n.t('meter')}</Text>
               </View>
             )}
+          <View style={styles.rowTextSetting}>
+            <Text style={styles.textDes}>{I18n.t('distanceDes')}</Text>
+          </View>
           <Text style={styles.sectionHeader}>{I18n.t('editAlermWeekDay')}</Text>
           <View style={styles.rowTextSetting}>
             <Text style={styles.text}>{I18n.t('editChoiceWeekDay')}</Text>
