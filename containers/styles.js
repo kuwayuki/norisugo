@@ -5,6 +5,8 @@ export const CHECK_SIZE = 30;
 
 // 背景色
 const CL_BG = '#dbe2ef';
+// 入力項目色
+const CL_INPUT_BG = '#FFFFF0';
 // 最寄り背景色
 const CL_NEAR_BG = '#3f72af';
 // リスト背景色
@@ -133,7 +135,9 @@ export const styles = StyleSheet.create({
     backgroundColor: CL_LIST_BG,
     borderStyle: 'solid',
     borderColor: CL_BORDER,
+    borderWidth: 1,
     borderBottomWidth: 0.25,
+    backgroundColor: CL_INPUT_BG,
   },
   rowStyle: {
     flex: 1,
@@ -154,11 +158,25 @@ export const styles = StyleSheet.create({
     backgroundColor: 'cornflowerblue',
   },
   textNum: {
-    width: '80%',
-    padding: 9,
+    width: '70%',
+    padding: 5,
     paddingLeft: 30,
+    marginLeft: 30,
     fontSize: 18,
     textAlign: 'right',
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: CL_INPUT_BG,
+  },
+  textNumRepeat: {
+    width: 50,
+    fontSize: 18,
+    textAlign: 'right',
+    padding: 5,
+    borderWidth: 1,
+    borderRadius: 5,
+    marginRight: 30,
+    backgroundColor: CL_INPUT_BG,
   },
   checkBoxText: {
     flexDirection: 'row',
@@ -196,11 +214,13 @@ export const styles = StyleSheet.create({
   },
   wordInput: {
     marginLeft: 20,
-    borderWidth: 1,
     fontSize: 18,
     width: '50%',
-    borderRadius: 5,
     height: 34,
+    padding: 3,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: CL_INPUT_BG,
   },
   wordButton: {
     width: 60,
@@ -286,8 +306,8 @@ export const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   textDes: {
-    paddingLeft: 30,
-    fontSize: 12,
+    paddingLeft: 15,
+    fontSize: 11,
     color: FONT_DES,
   },
   button: {

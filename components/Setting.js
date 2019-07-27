@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, Switch, View, Alert, ScrollView, Linking } from 'react-native';
+import { Text, Switch, View, Alert, ScrollView, Linking, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import {
   setOwnInfo,
@@ -33,6 +33,8 @@ export class Setting extends React.Component {
       recoveryTime: props.ownInfo.recoveryTime > 0,
       recoveryDistance: props.ownInfo.recoveryDistance,
       isNearestDisplay: props.ownInfo.isNearestDisplay,
+      repeatCnt: props.ownInfo.repeatCnt,
+      repeatInterval: props.ownInfo.repeatInterval,
       sortKind: props.ownInfo.sortKind,
       sortType: props.ownInfo.sortType,
     };
@@ -243,6 +245,25 @@ export class Setting extends React.Component {
               style={styles.setting}
               onValueChange={sortType => this.setState({ sortType })}
               value={this.state.sortType}
+            />
+          </View>
+          <Text style={styles.sectionHeader}>{I18n.t('notification')}</Text>
+          <View style={styles.rowTextSetting}>
+            <Text style={styles.text}>{I18n.t('repeatInterval')}</Text>
+            <TextInput
+              style={styles.textNumRepeat}
+              keyboardType={'number-pad'}
+              onChangeText={repeatInterval => { this.setState({ repeatInterval }); }}
+              value={this.state.repeatInterval}
+            />
+          </View>
+          <View style={styles.rowTextSetting}>
+            <Text style={styles.text}>{I18n.t('repeatCnt')}</Text>
+            <TextInput
+              style={styles.textNumRepeat}
+              keyboardType={'number-pad'}
+              onChangeText={repeatCnt => { this.setState({ repeatCnt }); }}
+              value={this.state.repeatCnt}
             />
           </View>
           {this.state.isDisplay && (

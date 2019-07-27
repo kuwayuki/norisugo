@@ -6,6 +6,8 @@
     "distance": 100,
     "reviewed": false,
     "sound": true,
+    "repeatInterval": 1,
+    "repeatCnt": 1,
     "recoveryTime": 60,
     "recoveryDistance": true,
     "isNearestDisplay": true,

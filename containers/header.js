@@ -84,6 +84,8 @@ const settingUpdate = (state, props) => {
   ownInfo.recoveryTime = recoveryTime;
   ownInfo.recoveryDistance = state.recoveryDistance;
   ownInfo.isNearestDisplay = state.isNearestDisplay;
+  ownInfo.repeatInterval = state.repeatInterval ? state.repeatInterval : 1;
+  ownInfo.repeatCnt = state.repeatCnt ? state.repeatCnt : 1;
   ownInfo.sortKind = state.sortKind;
   ownInfo.sortType = state.sortType;
   json.setStorageDataOwnInfo(ownInfo);
@@ -162,6 +164,7 @@ async function editMarkerClick(state, props, listIndex) {
   item.title = state.title;
   item.alermMessage = state.title + I18n.t('arrivedNear');
   item.isAlermed = false;
+  item.alermTime = null;
   item.alermDistance = Number(state.alermDistance);
   item.isLimitTimeZone = state.isLimitTimeZone;
   item.timeZoneStart = state.timeZoneStart;

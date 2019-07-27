@@ -12,6 +12,7 @@ import {
   isCheckDayWeek,
   checkGeofenceInside,
   checkGeofenceOutside,
+  stopNotification,
 } from '../containers/position';
 import { Alert, Vibration } from 'react-native';
 import { getDistanceMeter } from './utils';
@@ -26,9 +27,10 @@ export async function _handleNotification(notification) {
     //バックグラウンドで通知
   } else if (notification.origin === 'received') {
     //フォアグラウンドで通知
-    const PATTERN = [1000, 2000, 3000];
+    const PATTERN = [1000];
     Vibration.vibrate(PATTERN);
-    Alert.alert(I18n.t('blank'), notification.data.message);
+    // Alert.alert(I18n.t('blank'), notification.data.message);
+    stopNotification();
   }
 }
 
@@ -53,12 +55,13 @@ TaskManager.defineTask(GEO_TASK_NAME, async ({ data: { eventType, region }, erro
       return alermItem;
     }
   });
+  let ownInfo = await getStorageDataOwnInfo();
   for (let alermItem of targetALermList) {
     if (alermItem == null) {
       continue;
     }
     if (eventType === Location.GeofencingEventType.Enter) {
-      checkGeofenceInside(alermItem);
+      checkGeofenceInside(alermItem, ownInfo);
     } else if (eventType === Location.GeofencingEventType.Exit) {
       checkGeofenceOutside(alermItem);
     }
