@@ -4,8 +4,8 @@
     "description": "No description",
     "slug": "snack-H1UtDQHAN",
     "privacy": "unlisted",
-    "sdkVersion": "33.0.0",
-    "version": "1.0.7",
+    "sdkVersion": "34.0.0",
+    "version": "1.0.8",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "locales": {
@@ -29,6 +29,9 @@
         "otf",
         "xml"
       ]
+    },
+    "updates": {
+      "enabled": false
     },
     "hooks": {
       "postPublish": [
