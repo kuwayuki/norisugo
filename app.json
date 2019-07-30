@@ -4,8 +4,8 @@
     "description": "No description",
     "slug": "snack-Sy4Ing904",
     "privacy": "unlisted",
-    "sdkVersion": "33.0.0",
-    "version": "1.0.5",
+    "sdkVersion": "34.0.0",
+    "version": "1.0.6",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "locales": {
@@ -29,6 +29,9 @@
         "otf",
         "xml"
       ]
+    },
+    "updates": {
+      "enabled": false
     },
     "hooks": {
       "postPublish": [
