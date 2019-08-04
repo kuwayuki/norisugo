@@ -6,7 +6,7 @@ import {
   Switch,
   TouchableOpacity,
   ScrollView,
-  AppState
+  AppState,
 } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import Swipeout from 'react-native-swipeout';
@@ -197,9 +197,10 @@ export class Top extends Component {
       }
 
       this.timer = setInterval(async () => {
-        if (AppState.currentState === 'active') {
-          await this.getAsyncPosition();
-        }
+        await this.getAsyncPosition();
+        // if (AppState.currentState === 'active') {
+        //   await this.getAsyncPosition();
+        // }
       }, TIMER);
     }
   }

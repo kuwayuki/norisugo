@@ -26,10 +26,12 @@ export async function _handleNotification(notification) {
   if (notification.origin === 'selected') {
     //バックグラウンドで通知
   } else if (notification.origin === 'received') {
-    //フォアグラウンドで通知
-    const PATTERN = [1000];
-    Vibration.vibrate(PATTERN);
-    // Alert.alert(I18n.t('blank'), notification.data.message);
+    //フォアグラウンドで通知(初回のみ)
+    if (!(notification.data.count) || notification.data.count == 0) {
+      const PATTERN = [1000];
+      Vibration.vibrate(PATTERN);
+      Alert.alert(I18n.t('blank'), notification.data.message);
+    }
     stopNotification();
   }
 }

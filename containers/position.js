@@ -1,29 +1,31 @@
-import { getDistanceMeter, getNumTime, getTimeFromDateTime } from './utils';
+import { getDistanceMeter, getNumTime, getTimeFromDateTime, sleep } from './utils';
 import { addAsyncStorage } from './jsonFile';
 import { Notifications } from 'expo';
 import * as DEF from '../constants/constants';
 import I18n from '../i18n/index';
 
-const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
-
 // 地点までの距離が、通知距離内かのチェック
+let gTimerCancel = false;
 export async function notificateAlerm(alermItem, ownInfo) {
-  let localNotification = {
-    title: I18n.t('appTitle'),
-    body: alermItem.alermMessage,
-    android: {
-      sound: true,
-    },
-    ios: {
-      sound: true,
-    },
-    data: {
-      message: alermItem.alermMessage,
-    },
-  }
   var repeatInterval = ownInfo.repeatInterval ? ownInfo.repeatInterval * 1000 : 1000;
   var repeatCnt = ownInfo.repeatCnt ? ownInfo.repeatCnt : 1;
+  let lTimerCancel = false;
   for (var step = 0; step < repeatCnt; step++) {
+    if (lTimerCancel) break;
+    let localNotification = {
+      title: I18n.t('appTitle'),
+      body: alermItem.alermMessage,
+      android: {
+        sound: true,
+      },
+      ios: {
+        sound: true,
+      },
+      data: {
+        count: step,
+        message: alermItem.alermMessage,
+      },
+    }
     if (step == 0) {
       await Notifications.presentLocalNotificationAsync(localNotification);
     }
@@ -31,16 +33,11 @@ export async function notificateAlerm(alermItem, ownInfo) {
       let schedulingOptions = { time: (new Date()).getTime() + (repeatInterval * step) };
       await Notifications.scheduleLocalNotificationAsync(localNotification, schedulingOptions);
     }
+    sleep(repeatInterval);
+    lTimerCancel = gTimerCancel;
   }
-  // await Notifications.presentLocalNotificationAsync(localNotification);
-  // await Notifications.presentLocalNotificationAsync({
-  //   title: I18n.t('appTitle'),
-  //   body: alermItem.alermMessage,
-  //   sound: true,
-  //   data: {
-  //     message: alermItem.alermMessage,
-  //   },
-  // });
+  // 最後は必ず元に戻す
+  gTimerCancel = false;
 };
 
 export const stopNotification = (localNotificationId) => {
@@ -50,6 +47,7 @@ export const stopNotification = (localNotificationId) => {
   else {
     Notifications.cancelAllScheduledNotificationsAsync();
   }
+  gTimerCancel = true;
 }
 
 // 地点までの距離が、通知距離内かのチェック
