@@ -33,8 +33,8 @@ export class Setting extends React.Component {
       recoveryTime: props.ownInfo.recoveryTime > 0,
       recoveryDistance: props.ownInfo.recoveryDistance,
       isNearestDisplay: props.ownInfo.isNearestDisplay,
-      repeatCnt: props.ownInfo.repeatCnt,
-      repeatInterval: props.ownInfo.repeatInterval,
+      repeatCnt: String(props.ownInfo.repeatCnt),
+      repeatInterval: String(props.ownInfo.repeatInterval),
       sortKind: props.ownInfo.sortKind,
       sortType: props.ownInfo.sortType,
     };
