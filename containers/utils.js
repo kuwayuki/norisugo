@@ -13,6 +13,8 @@ import {
   CL_OUT_TIME,
 } from './styles';
 
+export const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
+
 export const distanceMtoKm = meter => {
   var n = 2;
   let km = Math.floor((meter / 1000) * Math.pow(10, n)) / Math.pow(10, n);
