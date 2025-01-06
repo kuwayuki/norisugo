@@ -1,13 +1,20 @@
-# Sample Snack app
+# 寝過ごし・乗り過ごし防止アプリ
 
-Welcome to Expo!
+このアプリは、降車する駅を登録しておくことで、電車などの乗り物で近づいた際に通知を送ることで、寝過ごしや乗り過ごしを防止する iOS アプリです。
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by clicking the **Run** button or use the simulator by clicking **Tap to Play**. When you're done, click **Save** and share the link!
+## 主な機能
 
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Export** your project and use it with [expo-cli](https://docs.expo.io/versions/latest/introduction/installation.html).
+- 指定した駅への接近通知
+- 通知距離の設定
 
-Projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the **Embed** button.
+## 使用技術
 
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.io).
+- **React Native (Expo)**
+- **使用ライブラリ**:
+  - react-native-maps: 地図表示と位置情報
+  - axios: API 通信
 
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack-web).
+## 掲載
+
+- **Qiita**
+  - https://qiita.com/ee68028/items/8c3e2f88b7fe33e0276a
